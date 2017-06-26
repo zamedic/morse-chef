@@ -322,9 +322,9 @@
   </profiles>
 
   <scm>
-    <url>https://github.com/zamedic/morse-alert.git</url>
+    <url>https://github.com/zamedic/morse-chef.git</url>
     <developerConnection>
-      scm:git:ssh://builder@default@autobot-wkbxttwhfapcogjk.us-east-1.opsworks-cm.io:8989/default/Marc/MorseChef
+      scm:git:ssh://builder@default@autobot-wkbxttwhfapcogjk.us-east-1.opsworks-cm.io:8989/default/Marc/morse-chef
     </developerConnection>
   </scm>
 
