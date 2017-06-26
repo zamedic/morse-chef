@@ -4,10 +4,12 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.service.UserService;
 import com.marcarndt.morse.telegrambots.api.objects.Chat;
 import com.marcarndt.morse.telegrambots.api.objects.User;
+import javax.ejb.Stateless;
 
 /**
  * Created by arndt on 2017/06/26.
  */
+@Stateless
 public class ChefConfigure extends BaseCommand {
 
   public static final String server = "Server URL";

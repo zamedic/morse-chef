@@ -1,10 +1,10 @@
 package com.marcarndt.morse.service;
 
 import com.marcarndt.morse.MorseBotException;
+import com.marcarndt.morse.chefapi.ChefApiClient;
+import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
 import com.marcarndt.morse.dto.Node;
-import edu.tongji.wang.chefapi.ChefApiClient;
-import edu.tongji.wang.chefapi.method.ApiMethod;
 import java.io.File;
 import java.io.StringReader;
 import java.net.InetAddress;
@@ -72,7 +72,7 @@ public class ChefService {
       try {
         nodes.add(getNode(jsonStructure));
       } catch (MorseBotException e) {
-        LOG.info("Ignoring node due ot error - "+e.getMessage());
+        LOG.info("Ignoring node due ot error - " + e.getMessage());
       }
     }
     return nodes;
@@ -84,12 +84,15 @@ public class ChefService {
         .get("/organizations/" + chefDetails.getOrginisation() + "/nodes/" + node)
         .execute();
     if (response.getReturnCode() != 200) {
-      throw new MorseBotException("Could not find dto: " + node);
+      LOG.severe("Could not find node " + node + ". Response Code: " + response.getReturnCode()
+          + ". Error: " + response.getResponseBodyAsString());
+      throw new MorseBotException(
+          "Could not find dto: " + node + " Please check system logs for details ");
+
     }
     JsonReader reader = Json.createReader(new StringReader(response.getResponseBodyAsString()));
     JsonObject rootObject = reader.readObject();
     return getNode(rootObject);
-
   }
 
   private Node getNode(JsonObject rootObject) throws MorseBotException {
@@ -105,15 +108,12 @@ public class ChefService {
     jsonObject = rootObject.getJsonObject("automatic");
     if (!jsonObject.containsKey("ipaddress")) {
       //Try and find the IP based on hostname
-
       try {
         InetAddress address = InetAddress.getByName(name + ".standardbank.co.za");
         ipAddress = address.getHostAddress();
       } catch (UnknownHostException e) {
         throw new MorseBotException("No Ip Address for dto");
       }
-
-
     } else {
       ipAddress = jsonObject.getString("ipaddress");
     }

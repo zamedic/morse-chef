@@ -18,7 +18,6 @@ public class ChefFileCommand extends BaseCommand {
   @Inject
   SSHService sshService;
 
-
   @Override
   public String getRole() {
     return "String";
@@ -28,7 +27,6 @@ public class ChefFileCommand extends BaseCommand {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select File", sshService.getFileDescriptions());
     return ChefFile;
   }
-
 
   @Override
   public String getCommandIdentifier() {

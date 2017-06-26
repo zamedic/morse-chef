@@ -35,6 +35,4 @@ public class ExecuteCommand extends BaseCommand {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select command", sshService.getCommandNames());
     return null;
   }
-
-
 }
