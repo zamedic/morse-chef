@@ -35,7 +35,7 @@ public class ChefConfigureTest {
    */
   @Test
   public void getCommandIdentifier() throws Exception {
-    Assert.assertEquals("chefConfig", chefConfigure.getCommandIdentifier());
+    Assert.assertEquals("chefconfig", chefConfigure.getCommandIdentifier());
   }
 
   /**

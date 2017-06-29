@@ -1,4 +1,4 @@
-package com.marcarndt.morse.command.commandlets.chefConfig;
+package com.marcarndt.morse.command.commandlets.chefconfig;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.ChefConfigure;

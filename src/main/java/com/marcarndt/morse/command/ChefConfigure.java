@@ -36,10 +36,10 @@ public class ChefConfigure extends BaseCommand {
 
   /**
    * getConfig.
-   * @return chefConfig
+   * @return chefconfig
    */
   public String getCommandIdentifier() {
-    return "chefConfig";
+    return "chefconfig";
   }
 
   /**
