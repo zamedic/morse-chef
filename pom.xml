@@ -4,7 +4,7 @@
 
   <groupId>com.marcarndt.morse</groupId>
   <artifactId>chef</artifactId>
-  <version>1.1.2-SNAPSHOT</version>
+  <version>1.1.2</version>
   <packaging>jar</packaging>
 
   <name>Morse Chef Plugin</name>
@@ -341,7 +341,7 @@
     <developerConnection>
       scm:git:ssh://builder@default@autobot-wkbxttwhfapcogjk.us-east-1.opsworks-cm.io:8989/default/Marc/morse-chef
     </developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.1.2</tag>
   </scm>
 
   <distributionManagement>
