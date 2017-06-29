@@ -13,19 +13,17 @@ import javax.inject.Inject;
 @Stateless
 public class ChefApplicationService {
 
-  private Logger logger = Logger.getLogger(ChefApplicationService.class.getName());
-
   /**
    * The Mongo service.
    */
   @Inject
   MongoService mongoService;
-
   /**
    * The Application service.
    */
   @Inject
   ApplicationService applicationService;
+  private Logger logger = Logger.getLogger(ChefApplicationService.class.getName());
 
   /**
    * Add recipe to application.

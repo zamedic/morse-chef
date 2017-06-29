@@ -13,10 +13,9 @@ import javax.inject.Inject;
  */
 public class AddRecipeApplication implements Commandlet {
 
+  public static final String addRecipeApplicationState = "Add Recipe Application";
   @Inject
   ApplicationService applicationService;
-
-  public static final String addRecipeApplicationState = "Add Recipe Application";
 
   @Override
   public boolean canHandleCommand(Message message, String s) {
@@ -25,7 +24,8 @@ public class AddRecipeApplication implements Commandlet {
 
   @Override
   public void handleCommand(Message message, String s, List<String> list, MorseBot morseBot) {
-    morseBot.sendReplyKeyboardMessage(message,"Select application",applicationService.getApplications());
+    morseBot.sendReplyKeyboardMessage(message, "Select application",
+        applicationService.getApplications());
   }
 
   @Override

@@ -12,11 +12,11 @@ import org.apache.commons.httpclient.HttpMethod;
 
 public class ApiMethod {
 
-  private HttpClient client = null;
   protected HttpMethod method = null;
   protected String reqBody = "";
   protected String userId = "";
   protected String pemPath = "";
+  private HttpClient client = null;
   private String methodName = "GET";
 
   private int returnCode;

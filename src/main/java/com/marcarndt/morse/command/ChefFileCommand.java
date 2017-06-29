@@ -20,11 +20,11 @@ public class ChefFileCommand extends BaseCommand {
 
   @Override
   public String getRole() {
-    return "String";
+    return "Trusted";
   }
 
   protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
-    morseBot.sendReplyKeyboardMessage(user, chat, "Select File", sshService.getFileDescriptions());
+    morseBot.sendReplyKeyboardMessage(user, chat, "Select file", sshService.getFileDescriptions());
     return ChefFile;
   }
 

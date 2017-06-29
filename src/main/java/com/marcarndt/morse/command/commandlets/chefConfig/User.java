@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class User implements Commandlet {
+
   public static String ChefUserState = "Chef User";
 
   public boolean canHandleCommand(Message message, String state) {
