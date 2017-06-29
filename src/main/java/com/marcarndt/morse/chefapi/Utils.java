@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
@@ -42,12 +43,12 @@ public final class Utils {
     byte[] outbty = null;
     try {
       messageDigest = MessageDigest.getInstance("SHA-1");
-      final byte[] digest = messageDigest.digest(inStr.getBytes());
+      final byte[] digest = messageDigest.digest(inStr.getBytes(Charset.defaultCharset()));
       outbty = Base64.encode(digest);
     } catch (NoSuchAlgorithmException nsae) {
       LOG.log(Level.SEVERE,"error on chef util",nsae);
     }
-    return new String(outbty);
+    return new String(outbty, Charset.defaultCharset());
   }
 
   /**

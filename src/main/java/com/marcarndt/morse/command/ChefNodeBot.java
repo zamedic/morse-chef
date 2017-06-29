@@ -26,7 +26,7 @@ public class ChefNodeBot extends BaseCommand {
     return "Trusted";
   }
 
-  protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
+  protected String performCommand(MorseBot morseBot, User user, Chat chat, String... arguments) {
     Node node = null;
     try {
       if (arguments.length != 1) {
