@@ -2,9 +2,17 @@ package com.marcarndt.morse.chefapi.method;
 
 import org.apache.commons.httpclient.HttpMethod;
 
-public class Get extends ApiMethod {
+/**
+ * The type Get.
+ */
+public class Get extends ApiMethod {//NOPMD
 
-  public Get(HttpMethod method) {
+  /**
+   * Instantiates a new Get.
+   *
+   * @param method the method
+   */
+  public Get(final HttpMethod method) {
     super("GET");
     this.method = method;
   }
