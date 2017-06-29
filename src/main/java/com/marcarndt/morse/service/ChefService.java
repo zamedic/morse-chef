@@ -23,6 +23,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -276,14 +277,11 @@ public class ChefService {
 
     KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
     keystore.load(localCertIn, "changeit".toCharArray());
-    if (keystore.containsAlias("chef")) {
-      localCertIn.close();
-      return;
-    }
+    
     localCertIn.close();
     Certificate[] certs = certInformation(url);
 
-    keystore.setCertificateEntry("chef", certs[0]);
+    keystore.setCertificateEntry("chef"+ Math.random(), certs[0]);
 
     OutputStream out = new FileOutputStream(file);
     keystore.store(out, "changeit".toCharArray());
