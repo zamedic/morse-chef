@@ -16,7 +16,7 @@ import org.apache.commons.httpclient.HttpMethod;
 /**
  * The type Api method.
  */
-public abstract class ApiMethod {
+public class ApiMethod {
 
   /**
    * Logger.
@@ -76,15 +76,15 @@ public abstract class ApiMethod {
     String timeStamp = sdf.format(new Date());
     timeStamp = timeStamp.replace(" ", "T");
 
-    StringBuilder sb = new StringBuilder();
-    sb.append("Method:").append(methodName).append("\n");
-    sb.append("Hashed Path:").append(hashedPath).append("\n");
-    sb.append("X-Ops-Content-Hash:").append(hashedBody).append("\n");
-    sb.append("X-Ops-Timestamp:").append(timeStamp).append("\n");
-    sb.append("X-Ops-UserId:").append(userId);
+    final StringBuilder stringBuilder = new StringBuilder(100);
+    stringBuilder.append("Method:").append(methodName)
+        .append("\nHashed Path:").append(hashedPath)
+        .append("\nX-Ops-Content-Hash:").append(hashedBody)
+        .append("\nX-Ops-Timestamp:").append(timeStamp)
+        .append("\nX-Ops-UserId:").append(userId);
 
-    String auth_String = Utils.signWithRSA(sb.toString(), pemPath);
-    String[] auth_headers = Utils.splitAs60(auth_String);
+    final String authString = Utils.signWithRSA(stringBuilder.toString(), pemPath);
+    final String[] authHeaders = Utils.splitAs60(authString);
 
     method.addRequestHeader("Content-type", "application/json");
     method.addRequestHeader("X-Ops-Timestamp", timeStamp);
@@ -94,11 +94,8 @@ public abstract class ApiMethod {
     method.addRequestHeader("X-Ops-Content-Hash", hashedBody);
     method.addRequestHeader("X-Ops-Sign", "version=1.0");
 
-    for (int i = 0; i < auth_headers.length; i++) {
-      method.addRequestHeader("X-Ops-Authorization-" + (i + 1), auth_headers[i]);
-    }
-    for(Header header : method.getRequestHeaders()){
-      LOG.info(header.getName()+": "+header.getValue());
+    for (int i = 0; i < authHeaders.length; i++) {
+      method.addRequestHeader("X-Ops-Authorization-" + (i + 1), authHeaders[i]);
     }
 
     try {
@@ -133,7 +130,7 @@ public abstract class ApiMethod {
     try {
       reqBody = method.getResponseBodyAsString();
     } catch (IOException e) {
-      LOG.log(Level.SEVERE,"IO Error",e);
+      LOG.log(Level.SEVERE, "IO Error", e);
     } finally {
       method.releaseConnection();
     }
