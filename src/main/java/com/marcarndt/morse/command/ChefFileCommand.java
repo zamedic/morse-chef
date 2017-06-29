@@ -14,15 +14,15 @@ import javax.inject.Inject;
 public class ChefFileCommand extends BaseCommand {
 
   /**
-   * The constant ChefFile.
+   * The constant chefFile.
    */
-  public static String ChefFile = "ChefFile";
+  public static String chefFile = "chefFile";
 
   /**
    * The Ssh service.
    */
   @Inject
-  private SSHService sshService;
+  private transient SSHService sshService;
 
   /**
    * Trusted Role
@@ -39,11 +39,11 @@ public class ChefFileCommand extends BaseCommand {
    * @param user user
    * @param chat chat
    * @param arguments arguments ignored byt he command
-   * @return ChefFile state
+   * @return chefFile state
    */
-  protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String... arguments) {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select file", sshService.getFileDescriptions());
-    return ChefFile;
+    return chefFile;
   }
 
   /**

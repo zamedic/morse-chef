@@ -44,7 +44,7 @@ public class ChefFileCommandTest {
     Mockito.when(sshService.getFileDescriptions()).thenReturn(files);
     String response = chefFileCommand.performCommand(morseBot,user,chat,null);
     Mockito.verify(morseBot).sendReplyKeyboardMessage(user,chat,"Select file",files);
-    assertEquals("ChefFile",response);
+    assertEquals("chefFile",response);
   }
 
   @Test
