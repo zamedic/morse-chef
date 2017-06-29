@@ -16,13 +16,13 @@ public class Server implements Commandlet {
   public static String ChefServerState = "ChefServer";
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefConfigure.chefConfigState) && message.getText()
-        .equals(ChefConfigure.server);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.SERVER);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Enter chef server URL");
+    morseBot.sendReplyMessage(message, "Enter chef SERVER URL");
   }
 
   public String getNewState(Message message, String command) {

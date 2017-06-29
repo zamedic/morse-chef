@@ -16,13 +16,13 @@ public class Key implements Commandlet {
   public static String ChefKeyState = "ChefKey";
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefConfigure.chefConfigState) && message.getText()
-        .equals(ChefConfigure.key);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.KEY);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Enter key path");
+    morseBot.sendReplyMessage(message, "Enter KEY path");
   }
 
   public String getNewState(Message message, String command) {

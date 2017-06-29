@@ -25,7 +25,7 @@ public class UpdateOrg implements Commandlet {
       MorseBot morseBot) {
     String org = message.getText();
     chefService.updateOrg(org);
-    morseBot.sendMessage("Updated org", message.getChatId().toString());
+    morseBot.sendMessage("Updated ORG", message.getChatId().toString());
 
 
   }

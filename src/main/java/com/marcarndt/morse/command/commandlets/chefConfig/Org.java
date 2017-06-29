@@ -16,13 +16,13 @@ public class Org implements Commandlet {
   public static String ChefOrgStage = "ChefOrg";
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefConfigure.chefConfigState) && message.getText()
-        .equals(ChefConfigure.org);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.ORG);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Enter new org name");
+    morseBot.sendReplyMessage(message, "Enter new ORG name");
   }
 
   public String getNewState(Message message, String command) {

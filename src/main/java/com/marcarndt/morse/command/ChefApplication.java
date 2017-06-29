@@ -9,21 +9,45 @@ import com.marcarndt.morse.telegrambots.api.objects.User;
  */
 public class ChefApplication extends BaseCommand {
 
+  /**
+   * Trusted Role.
+   *
+   * @return Trusted
+   */
   @Override
   public String getRole() {
     return "Trusted";
   }
 
+  /**
+   * TODO.
+   * @param morseBot morse bot
+   * @param user user
+   * @param chat chat
+   * @param strings chat arguments
+   * @return New state
+   */
   @Override
-  protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] strings) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String[] strings) {
     return null;
+    //TODO
   }
 
+  /**
+   * chefApplication.
+   *
+   * @return chefApplication
+   */
   @Override
   public String getCommandIdentifier() {
     return "chefApplication";
   }
 
+  /**
+   * Description.
+   *
+   * @return description
+   */
   @Override
   public String getDescription() {
     return "Configured Recipes for Chef";

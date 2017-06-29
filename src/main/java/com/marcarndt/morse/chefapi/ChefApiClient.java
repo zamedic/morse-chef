@@ -15,9 +15,9 @@ public class ChefApiClient {
   private String pemPath;
 
   /**
-   * @param userId user name correspond to the pem key
-   * @param pemPath path of the auth key
-   * @param endpoint chef api server address
+   * @param userId user name correspond to the pem KEY
+   * @param pemPath path of the auth KEY
+   * @param endpoint chef api SERVER address
    */
   public ChefApiClient(String userId, String pemPath, String endpoint) {
     this.userId = userId;

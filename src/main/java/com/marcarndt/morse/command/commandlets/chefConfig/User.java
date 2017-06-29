@@ -16,8 +16,8 @@ public class User implements Commandlet {
   public static String ChefUserState = "Chef User";
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefConfigure.chefConfigState) && message.getText()
-        .equals(ChefConfigure.chefuser);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.CHEFUSER);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
