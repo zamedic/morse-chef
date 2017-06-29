@@ -23,7 +23,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,29 +49,33 @@ public class ChefService {
   /**
    * The Log.
    */
-  static Logger LOG = Logger.getLogger(ChefService.class.getName());
+  private static final Logger LOG = Logger.getLogger(ChefService.class.getName());
+  /**
+   * Error Message.
+   */
+  public static final String ERROR = "we were unable to download and add the certificate to the default keystore. ";
 
   /**
    * The Mongo service.
    */
   @Inject
-  MongoService mongoService;
+  private transient MongoService mongoService;
 
   /**
    * The Chef client.
    */
-  ChefApiClient chefClient;
+  private transient ChefApiClient chefClient;
   /**
    * The Chef details.
    */
-  ChefDetails chefDetails;
+  private transient ChefDetails chefDetails;
 
   /**
    * Sets .
    */
   @PostConstruct
   public void setup() {
-    Query<ChefDetails> query = mongoService.getDatastore().createQuery(ChefDetails.class);
+    final Query<ChefDetails> query = mongoService.getDatastore().createQuery(ChefDetails.class);
     if (query.count() == 0) {
       chefDetails = new ChefDetails();
     } else {
@@ -92,7 +95,7 @@ public class ChefService {
    * @return the search url
    */
   public String getSearchURL() {
-    ApiMethod response = chefClient
+    final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/search").execute();
     return response.getResponseBodyAsString();
   }
@@ -103,21 +106,24 @@ public class ChefService {
    * @param recipe the recipe
    * @return the list
    */
-  public List<Node> recipeSearch(String recipe) {
+  public List<Node> recipeSearch(final String recipe) {
     LOG.info("Fetching Nodes from chef.");
-    ApiMethod response = chefClient
+    final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/search/dto?q=recipe:" + recipe)
         .execute();
-    JsonReader reader = Json.createReader(new StringReader(response.getResponseBodyAsString()));
-    JsonObject rootObject = reader.readObject();
-    JsonArray array = rootObject.getJsonArray("rows");
-    ArrayList<Node> nodes = new ArrayList();
-    for (JsonValue value : array) {
-      JsonObject jsonStructure = (JsonObject) value;
+    final JsonReader reader = Json
+        .createReader(new StringReader(response.getResponseBodyAsString()));
+    final JsonObject rootObject = reader.readObject();
+    final JsonArray array = rootObject.getJsonArray("rows");
+    final ArrayList<Node> nodes = new ArrayList();
+    for (final JsonValue value : array) {
+      final JsonObject jsonStructure = (JsonObject) value;
       try {
         nodes.add(getNode(jsonStructure));
       } catch (MorseBotException e) {
-        LOG.info("Ignoring node due ot error - " + e.getMessage());
+        if (LOG.isLoggable(Level.INFO)) {
+          LOG.info("Ignoring node due ot ERROR - " + e.getMessage());//NOPMD
+        }
       }
     }
     return nodes;
@@ -131,25 +137,27 @@ public class ChefService {
    * @return the node
    * @throws MorseBotException the morse bot exception
    */
-  public Node getNode(String node) throws MorseBotException {
-    ApiMethod response = chefClient
+  public Node getNode(final String node) throws MorseBotException {
+    final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/nodes/" + node)
         .execute();
     if (response.getReturnCode() != 200) {
-      LOG.severe("Could not find node " + node + ". Response Code: " + response.getReturnCode()
-          + ". Error: " + response.getResponseBodyAsString());
+      if (LOG.isLoggable(Level.SEVERE)) {
+        LOG.severe("Could not find node " + node + ". Response Code: " + response.getReturnCode()
+            + ". Error: " + response.getResponseBodyAsString());
+      }
       throw new MorseBotException(
           "Could not find dto: " + node + " Please check system logs for details ");
 
     }
-    JsonReader reader = Json.createReader(new StringReader(response.getResponseBodyAsString()));
-    JsonObject rootObject = reader.readObject();
+    final JsonReader reader = Json
+        .createReader(new StringReader(response.getResponseBodyAsString()));
+    final JsonObject rootObject = reader.readObject();
     return getNode(rootObject);
   }
 
-  private Node getNode(JsonObject rootObject) throws MorseBotException {
-    String name = rootObject.getString("name");
-    String env = rootObject.getString("chef_environment");
+  private Node getNode(final JsonObject rootObject) throws MorseBotException {
+    final String name = rootObject.getString("name");
     JsonObject jsonObject = rootObject.getJsonObject("automatic");
     String platform = "";
     String ipAddress = "";
@@ -158,20 +166,20 @@ public class ChefService {
     }
 
     jsonObject = rootObject.getJsonObject("automatic");
-    if (!jsonObject.containsKey("ipaddress")) {
+    if (jsonObject.containsKey("ipaddress")) {
+      ipAddress = jsonObject.getString("ipaddress");
+    } else {
       //Try and find the IP based on hostname
       try {
-        InetAddress address = InetAddress.getByName(name + ".standardbank.co.za");
+        final InetAddress address = InetAddress.getByName(name + ".standardbank.co.za");
         ipAddress = address.getHostAddress();
       } catch (UnknownHostException e) {
-        throw new MorseBotException("No Ip Address for dto");
+        LOG.log(Level.SEVERE, "Unable to find host", e);
+        throw new MorseBotException("No Ip Address for dto ", e);
       }
-    } else {
-      ipAddress = jsonObject.getString("ipaddress");
     }
 
-    Node nodeObject = new Node(name, env, platform, ipAddress);
-    return nodeObject;
+    return new Node(name, rootObject.getString("chef_environment"), platform, ipAddress);
   }
 
   /**
@@ -180,14 +188,13 @@ public class ChefService {
    * @param keyPath the key path
    * @throws MorseBotException the morse bot exception
    */
-  public void updateKey(String keyPath) throws MorseBotException {
-    ChefDetails chefDetails = getChefDetails();
+  public void updateKey(final String keyPath) throws MorseBotException {
 
-    File file = new File(keyPath);
+    final File file = new File(keyPath);
     if (!file.exists()) {
       throw new MorseBotException("cannot find KEY file " + keyPath);
     }
-
+    final ChefDetails chefDetails = getChefDetails();
     chefDetails.setKeyPath(keyPath);
     mongoService.getDatastore().save(chefDetails);
     setup();
@@ -206,8 +213,8 @@ public class ChefService {
    *
    * @param org the org
    */
-  public void updateOrg(String org) {
-    ChefDetails chefDetails = getChefDetails();
+  public void updateOrg(final String org) {
+    final ChefDetails chefDetails = getChefDetails();
     chefDetails.setOrginisation(org);
     mongoService.getDatastore().save(chefDetails);
     setup();
@@ -219,8 +226,8 @@ public class ChefService {
    * @param server the server
    * @throws MorseBotException the morse bot exception
    */
-  public void updateServer(String server) throws MorseBotException {
-    ChefDetails chefDetails = getChefDetails();
+  public void updateServer(final String server) throws MorseBotException {
+    final ChefDetails chefDetails = getChefDetails();
     chefDetails.setServerUrl(server);
     mongoService.getDatastore().save(chefDetails);
     setup();
@@ -229,28 +236,23 @@ public class ChefService {
     } catch (KeyStoreException e) {
       LOG.log(Level.SEVERE, "Key Store exception", e);
       throw new MorseBotException(
-          "we were unable to download and add the certificate to the default keystore. " + e
-              .getMessage());
+          ERROR + e.getMessage(), e);
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "IO exception", e);
       throw new MorseBotException(
-          "we were unable to download and add the certificate to the default keystore. " + e
-              .getMessage());
+          ERROR + e.getMessage(), e);
     } catch (CertificateException e) {
       LOG.log(Level.SEVERE, "Certificate exception", e);
       throw new MorseBotException(
-          "we were unable to download and add the certificate to the default keystore. " + e
-              .getMessage());
+          ERROR + e.getMessage(), e);
     } catch (NoSuchAlgorithmException e) {
       LOG.log(Level.SEVERE, "No such algorithm exception exception", e);
       throw new MorseBotException(
-          "we were unable to download and add the certificate to the default keystore. " + e
-              .getMessage());
+          ERROR + e.getMessage(), e);
     } catch (KeyManagementException e) {
       LOG.log(Level.SEVERE, "Key management exception", e);
       throw new MorseBotException(
-          "we were unable to download and add the certificate to the default keystore. " + e
-              .getMessage());
+          ERROR + e.getMessage(), e);
     }
 
   }
@@ -260,97 +262,79 @@ public class ChefService {
    *
    * @param user the user
    */
-  public void updateUser(String user) {
-    ChefDetails chefDetails = getChefDetails();
+  public void updateUser(final String user) {
+    final ChefDetails chefDetails = getChefDetails();
     chefDetails.setUserName(user);
     mongoService.getDatastore().save(chefDetails);
     setup();
   }
 
-  private void addCert(String url)
+  private void addCert(final String url)
       throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, KeyManagementException {
 
     final char sep = File.separatorChar;
-    File dir = new File(System.getProperty("java.home") + sep + "lib" + sep + "security");
-    File file = new File(dir, "cacerts");
-    InputStream localCertIn = new FileInputStream(file);
+    final File dir = new File(System.getProperty("java.home") + sep + "lib" + sep + "security");
+    final File file = new File(dir, "cacerts");
+    final InputStream localCertIn = new FileInputStream(file);
 
-    KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+    final KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
     keystore.load(localCertIn, "changeit".toCharArray());
-    
+
     localCertIn.close();
-    Certificate[] certs = certInformation(url);
+    final Certificate[] certs = certInformation(url);
 
-    keystore.setCertificateEntry("chef"+ Math.random(), certs[0]);
+    keystore.setCertificateEntry("chef" + Math.random(), certs[0]);
 
-    OutputStream out = new FileOutputStream(file);
+    final OutputStream out = new FileOutputStream(file);
     keystore.store(out, "changeit".toCharArray());
     out.close();
   }
 
-  private Certificate[] certInformation(String aurl)
+  private Certificate[] certInformation(final String aurl)
       throws IOException, NoSuchAlgorithmException, KeyManagementException {
-    URL destinationUrl = new URL(aurl);
-    HttpsURLConnection conn = (HttpsURLConnection) destinationUrl.openConnection();
-    SSLContext sc = SSLContext.getInstance("TLS");
-    sc.init(null, new TrustManager[]{new X509TrustManager() {
+    final URL destinationUrl = new URL(aurl);
+    final HttpsURLConnection conn = (HttpsURLConnection) destinationUrl.openConnection();
+    final SSLContext sslContext = SSLContext.getInstance("TLS");
+    sslContext.init(null, new TrustManager[]{new X509TrustManager() {
 
+      /**
+       * Does nothing - this is intentional since we want to accept all certificates.
+       *
+       * @param x509Certificates certificate
+       * @param manager String
+       * @throws CertificateException Standard Exception
+       */
       @Override
-      public void checkClientTrusted(X509Certificate[] x509Certificates, String s)
+      public void checkClientTrusted(final X509Certificate[] x509Certificates, final String manager)
           throws CertificateException {
+        //Does nothing to accept all chef certs.
 
       }
 
+      /**
+       * Does nothing - this is intentional since we want to accept all certificates.
+       *
+       * @param x509Certificates certificate
+       * @param manager String
+       * @throws CertificateException Exception
+       */
       @Override
-      public void checkServerTrusted(X509Certificate[] x509Certificates, String s)
+      public void checkServerTrusted(final X509Certificate[] x509Certificates, final String manager)
           throws CertificateException {
-
+        //Does nothing to accept all chef certs
       }
 
+      /**
+       * Accept all certificates.
+       * @return null
+       */
       @Override
-      public X509Certificate[] getAcceptedIssuers() {
+      public X509Certificate[] getAcceptedIssuers() {//NOPMD
         return null;
       }
     }}, new java.security.SecureRandom());
-    conn.setSSLSocketFactory(sc.getSocketFactory());
+    conn.setSSLSocketFactory(sslContext.getSocketFactory());
     conn.connect();
     return conn.getServerCertificates();
-  }
-
-
-  /**
-   * Disables the SSL certificate checking for new instances of {@link HttpsURLConnection} This has
-   * been created to aid testing on a local box, not for use on production.
-   */
-  private static void disableSSLCertificateChecking() {
-    TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-      public X509Certificate[] getAcceptedIssuers() {
-        return null;
-      }
-
-      @Override
-      public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-          throws CertificateException {
-        // Not implemented
-      }
-
-      @Override
-      public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-          throws CertificateException {
-        // Not implemented
-      }
-    }};
-
-    try {
-      SSLContext sc = SSLContext.getInstance("TLS");
-
-      sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
-      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-    } catch (KeyManagementException e) {
-      e.printStackTrace();
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
   }
 }
