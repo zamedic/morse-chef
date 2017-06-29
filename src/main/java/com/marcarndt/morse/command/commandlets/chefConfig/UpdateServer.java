@@ -1,4 +1,4 @@
-package com.marcarndt.morse.command.commandlets.chef;
+package com.marcarndt.morse.command.commandlets.chefConfig;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
@@ -12,20 +12,21 @@ import javax.inject.Inject;
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class UpdateUser implements Commandlet {
+public class UpdateServer implements Commandlet {
 
   @Inject
   ChefService chefService;
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(User.ChefUserState);
+    return state.equals(Server.ChefServerState);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    String user = message.getText();
-    chefService.updateUser(user);
-    morseBot.sendMessage("Updated user", message.getChatId().toString());
+    String server = message.getText();
+    chefService.updateServer(server);
+
+    morseBot.sendMessage("Udpated Server", message.getChatId().toString());
   }
 
   public String getNewState(Message message, String command) {
