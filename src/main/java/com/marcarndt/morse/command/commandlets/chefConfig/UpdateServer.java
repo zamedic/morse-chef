@@ -1,6 +1,7 @@
 package com.marcarndt.morse.command.commandlets.chefConfig;
 
 import com.marcarndt.morse.MorseBot;
+import com.marcarndt.morse.MorseBotException;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
@@ -24,9 +25,12 @@ public class UpdateServer implements Commandlet {
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
     String server = message.getText();
-    chefService.updateServer(server);
-
-    morseBot.sendMessage("Udpated Server", message.getChatId().toString());
+    try {
+      chefService.updateServer(server);
+      morseBot.sendMessage("Updated Server", message.getChatId().toString());
+    } catch (MorseBotException e) {
+      morseBot.sendMessage(e.getMessage(),message.getChatId().toString());
+    }
   }
 
   public String getNewState(Message message, String command) {
