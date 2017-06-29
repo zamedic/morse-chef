@@ -46,7 +46,7 @@ public final class Utils {
       final byte[] digest = messageDigest.digest(inStr.getBytes(Charset.defaultCharset()));
       outbty = Base64.encode(digest);
     } catch (NoSuchAlgorithmException nsae) {
-      LOG.log(Level.SEVERE,"error on chef util",nsae);
+      LOG.log(Level.SEVERE,"ERROR on chef util",nsae);
     }
     return new String(outbty, Charset.defaultCharset());
   }

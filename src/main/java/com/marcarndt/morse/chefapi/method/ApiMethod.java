@@ -78,10 +78,10 @@ public class ApiMethod {
 
     final StringBuilder stringBuilder = new StringBuilder(100);
     stringBuilder.append("Method:").append(methodName)
-    .append("\nHashed Path:").append(hashedPath)
-    .append("\nX-Ops-Content-Hash:").append(hashedBody)
-    .append("\nX-Ops-Timestamp:").append(timeStamp)
-    .append("Z\nX-Ops-UserId:").append(userId);
+        .append("\nHashed Path:").append(hashedPath)
+        .append("\nX-Ops-Content-Hash:").append(hashedBody)
+        .append("\nX-Ops-Timestamp:").append(timeStamp)
+        .append("\nX-Ops-UserId:").append(userId);
 
     final String authString = Utils.signWithRSA(stringBuilder.toString(), pemPath);
     final String[] authHeaders = Utils.splitAs60(authString);
@@ -130,7 +130,7 @@ public class ApiMethod {
     try {
       reqBody = method.getResponseBodyAsString();
     } catch (IOException e) {
-      LOG.log(Level.SEVERE,"IO Error",e);
+      LOG.log(Level.SEVERE, "IO Error", e);
     } finally {
       method.releaseConnection();
     }

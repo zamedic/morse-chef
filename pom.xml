@@ -4,7 +4,7 @@
 
   <groupId>com.marcarndt.morse</groupId>
   <artifactId>chef</artifactId>
-  <version>1.1.3-SNAPSHOT</version>
+  <version>1.1.5-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Morse Chef Plugin</name>
@@ -24,7 +24,7 @@
     <dependency>
       <groupId>com.marcarndt.morse</groupId>
       <artifactId>base</artifactId>
-      <version>1.1.5</version>
+      <version>1.1.6</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
