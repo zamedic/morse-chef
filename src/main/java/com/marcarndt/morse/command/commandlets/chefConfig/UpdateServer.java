@@ -1,4 +1,4 @@
-package com.marcarndt.morse.command.commandlets.chefConfig;
+package com.marcarndt.morse.command.commandlets.chefconfig;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.MorseBotException;
@@ -15,16 +15,32 @@ import javax.inject.Inject;
 @Stateless
 public class UpdateServer implements Commandlet {
 
+  /**
+   * The Chef service.
+   */
   @Inject
-  ChefService chefService;
+  private transient ChefService chefService;
 
-  public boolean canHandleCommand(Message message, String state) {
+  /**
+   * True when previous call was from Server
+   * @param message message
+   * @param state state
+   * @return true if this can execute
+   */
+  public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(Server.ChefServerState);
   }
 
-  public void handleCommand(Message message, String state, List<String> parameters,
-      MorseBot morseBot) {
-    String server = message.getText();
+  /**
+   * Update the server with the provided details
+   * @param message message
+   * @param state state
+   * @param parameters parameters
+   * @param morseBot morse bot
+   */
+  public void handleCommand(final Message message, final String state, final List<String> parameters,
+      final MorseBot morseBot) {
+    final String server = message.getText();
     try {
       chefService.updateServer(server);
       morseBot.sendMessage("Updated Server", message.getChatId().toString());
@@ -33,11 +49,24 @@ public class UpdateServer implements Commandlet {
     }
   }
 
-  public String getNewState(Message message, String command) {
+  /**
+   * None returned fromt his class
+   * @param message message
+   * @param command command
+   * @return null
+   */
+  public String getNewState(final Message message, final String command) {
     return null;
   }
 
-  public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+  /**
+   * Null
+   * @param message message
+   * @param state message
+   * @param parameters message
+   * @return null
+   */
+  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     return null;
   }
 }
