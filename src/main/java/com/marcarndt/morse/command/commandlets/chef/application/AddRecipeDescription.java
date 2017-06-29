@@ -1,7 +1,6 @@
-package com.marcarndt.morse.command.commandlets.chefapplication;
+package com.marcarndt.morse.command.commandlets.chef.application;
 
 import com.marcarndt.morse.MorseBot;
-import com.marcarndt.morse.command.ChefRecipe;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
 import java.util.List;
@@ -11,29 +10,29 @@ import javax.ejb.Stateless;
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class AddRecipe implements Commandlet {
+public class AddRecipeDescription implements Commandlet {
 
-  public static final String addChefRecipeState = "Add Chef Recipe";
+  public final static String addRecipeDescription = "Add chef recipe description";
 
   @Override
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefRecipe.chefRecipeAdminState) && message.getText()
-        .equals(ChefRecipe.addCookbook);
+    return state.equals(AddRecipeApplication.addRecipeApplicationState);
   }
 
   @Override
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Recipe description");
+    morseBot.sendReplyMessage(message, "Cookbook Name");
   }
 
   @Override
   public String getNewState(Message message, String command) {
-    return addChefRecipeState;
+    return addRecipeDescription;
   }
 
   @Override
   public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+    parameters.add(message.getText());
     return parameters;
   }
 }

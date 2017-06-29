@@ -1,43 +1,32 @@
-package com.marcarndt.morse.command.commandlets.chefconfig;
+package com.marcarndt.morse.command.commandlets.chef.config;
 
 import com.marcarndt.morse.MorseBot;
-import com.marcarndt.morse.MorseBotException;
+import com.marcarndt.morse.command.ChefConfigure;
 import com.marcarndt.morse.command.commandlet.Commandlet;
-import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class UpdateKey implements Commandlet {
+public class Key implements Commandlet {
 
-  @Inject
-  ChefService chefService;
+  public static String ChefKeyState = "ChefKey";
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(Key.ChefKeyState);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.KEY);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    String keyPath = message.getText();
-
-    try {
-      chefService.updateKey(keyPath);
-    } catch (MorseBotException e) {
-      morseBot.sendMessage(e.getMessage(), message.getChatId().toString());
-    }
-
-    morseBot.sendMessage("Key Updated", message.getChatId().toString());
-
+    morseBot.sendReplyMessage(message, "Enter KEY path");
   }
 
   public String getNewState(Message message, String command) {
-    return null;
+    return ChefKeyState;
   }
 
   public List<String> getNewStateParams(Message message, String state, List<String> parameters) {

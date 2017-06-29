@@ -1,4 +1,4 @@
-package com.marcarndt.morse.command.commandlets.chefconfig;
+package com.marcarndt.morse.command.commandlets.chef.config;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.ChefConfigure;
@@ -11,22 +11,22 @@ import javax.ejb.Stateless;
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class Server implements Commandlet {
+public class Org implements Commandlet {
 
-  public static String ChefServerState = "ChefServer";
+  public static String ChefOrgStage = "ChefOrg";
 
   public boolean canHandleCommand(Message message, String state) {
     return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
-        .equals(ChefConfigure.SERVER);
+        .equals(ChefConfigure.ORG);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Enter chef SERVER URL");
+    morseBot.sendReplyMessage(message, "Enter new ORG name");
   }
 
   public String getNewState(Message message, String command) {
-    return ChefServerState;
+    return ChefOrgStage;
   }
 
   public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
