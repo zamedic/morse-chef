@@ -34,13 +34,13 @@ public class ChefApplication extends BaseCommand {
   }
 
   /**
-   * chefApplication.
+   * chefapplication.
    *
-   * @return chefApplication
+   * @return chefapplication
    */
   @Override
   public String getCommandIdentifier() {
-    return "chefApplication";
+    return "chefapplication";
   }
 
   /**
