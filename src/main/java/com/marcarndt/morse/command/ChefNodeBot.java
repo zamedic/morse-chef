@@ -52,6 +52,6 @@ public class ChefNodeBot extends BaseCommand {
 
   @Override
   public String getDescription() {
-    return "provides details on a chef node. to use run /chef <node name>";
+    return "provides details on a chef node. to use run /chef (node name)";
   }
 }

@@ -3,17 +3,31 @@ package com.marcarndt.morse.chefapi.method;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 
-public class Put extends ApiMethod{
+/**
+ * The type Put.
+ */
+public class Put extends ApiMethod {//NOPMD
 
-	public Put(HttpMethod method) {
-		super("PUT");
-		this.method = method;
-	}
-	
-	public ApiMethod body(String body){
-		PutMethod put = (PutMethod) method;
-		put.setRequestBody(body);
-		return this;
-	}
+  /**
+   * Instantiates a new Put.
+   *
+   * @param method the method
+   */
+  public Put(final HttpMethod method) {
+    super("PUT");
+    this.method = method;
+  }
+
+  /**
+   * Body api method.
+   *
+   * @param body the body
+   * @return the api method
+   */
+  public ApiMethod body(final String body) {
+    final PutMethod put = (PutMethod) method;
+    put.setRequestBody(body);
+    return this;
+  }
 
 }

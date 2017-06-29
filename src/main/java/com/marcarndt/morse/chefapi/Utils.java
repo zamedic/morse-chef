@@ -12,72 +12,100 @@ import java.security.PrivateKey;
 import java.security.Security;
 import java.security.Signature;
 import java.security.SignatureException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMReader;
 import org.bouncycastle.util.encoders.Base64;
 
-public class Utils {
-	private Utils(){}
-	
-	public static String sha1AndBase64(String inStr) {
-		MessageDigest md = null;
-		String outStr = null;
-		byte[] outbty = null;
-		try {
-			md = MessageDigest.getInstance("SHA-1"); 
-			byte[] digest = md.digest(inStr.getBytes()); 
-			outbty = Base64.encode(digest);
-		} catch (NoSuchAlgorithmException nsae) {
-			nsae.printStackTrace();
-		}
-		return new String(outbty);
-	}
-	
-	public static String signWithRSA(String inStr, String pemPath) {
-		byte[] outStr = null;
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(pemPath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		Security.addProvider(new BouncyCastleProvider());
-		try {
-			KeyPair kp = (KeyPair) new PEMReader(br).readObject();
-			PrivateKey privateKey = kp.getPrivate();
-			Signature instance = Signature.getInstance("RSA");
-			instance.initSign(privateKey);
-			instance.update(inStr.getBytes());
+/**
+ * The type Utils.
+ */
+public final class Utils {
 
-			byte[] signature = instance.sign();
-			outStr = Base64.encode(signature);
-			String tmp = new String(outStr);
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SignatureException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return new String(outStr);
-	}
-	
-	public static String[] splitAs60(String inStr) {
-		int count = inStr.length() / 60;
-		String[] out = new String[count + 1];
+  /**
+   * Logger
+   */
+  private static final Logger LOG = Logger.getLogger(Utils.class.getName());
 
-		for (int i = 0; i < count; i++) {
-			String tmp = inStr.substring(i * 60, i * 60 + 60);
-			out[i] = tmp;
-		}
-		if (inStr.length() > count * 60) {
-			String tmp = inStr.substring(count * 60, inStr.length());
-			out[count] = tmp;
-		}
-		return out;
-	}
-	
+  private Utils() {
+  }
+
+  /**
+   * Sha 1 and base 64 string.
+   *
+   * @param inStr the in str
+   * @return the string
+   */
+  public static String sha1AndBase64(final String inStr) {
+    MessageDigest messageDigest = null;
+    byte[] outbty = null;
+    try {
+      messageDigest = MessageDigest.getInstance("SHA-1");
+      final byte[] digest = messageDigest.digest(inStr.getBytes());
+      outbty = Base64.encode(digest);
+    } catch (NoSuchAlgorithmException nsae) {
+      LOG.log(Level.SEVERE,"error on chef util",nsae);
+    }
+    return new String(outbty);
+  }
+
+  /**
+   * Sign with rsa string.
+   *
+   * @param inStr the in str
+   * @param pemPath the pem path
+   * @return the string
+   */
+  public static String signWithRSA(final String inStr, final String pemPath) {
+    byte[] outStr = null;
+    BufferedReader bufferedReader = null;
+    try {
+      bufferedReader = new BufferedReader(new FileReader(pemPath));
+    } catch (FileNotFoundException e) {
+      LOG.log(Level.SEVERE,"Error on chef util RSA",e);
+    }
+    Security.addProvider(new BouncyCastleProvider());
+    try {
+      final KeyPair keyPair = (KeyPair) new PEMReader(bufferedReader).readObject();
+      final PrivateKey privateKey = keyPair.getPrivate();
+      final Signature instance = Signature.getInstance("RSA");
+      instance.initSign(privateKey);
+      instance.update(inStr.getBytes());
+
+      final byte[] signature = instance.sign();
+      outStr = Base64.encode(signature);
+    } catch (InvalidKeyException e) {
+      LOG.log(Level.SEVERE,"Invalid Key",e);
+    } catch (IOException e) {
+      LOG.log(Level.SEVERE,"IO Error",e);
+    } catch (SignatureException e) {
+      LOG.log(Level.SEVERE,"Signature Exception",e);
+    } catch (NoSuchAlgorithmException e) {
+      LOG.log(Level.SEVERE,"Could not find algorithm",e);
+    }
+    return new String(outStr);
+  }
+
+  /**
+   * Split as 60 string [ ].
+   *
+   * @param inStr the in str
+   * @return the string [ ]
+   */
+  public static String[] splitAs60(final String inStr) {
+    final int count = inStr.length() / 60;
+    String[] out = new String[count + 1];
+
+    for (int i = 0; i < count; i++) {
+      final String tmp = inStr.substring(i * 60, i * 60 + 60);
+      out[i] = tmp;
+    }
+    if (inStr.length() > count * 60) {
+      final String tmp = inStr.substring(count * 60, inStr.length());
+      out[count] = tmp;
+    }
+    return out;
+  }
+
 }

@@ -12,29 +12,63 @@ import javax.ejb.Stateless;
 @Stateless
 public class ChefConfigure extends BaseCommand {
 
-  public static final String server = "Server URL";
-  public static final String chefuser = "User";
-  public static final String key = "Key Path";
-  public static final String org = "Organization";
+  /**
+   * The constant SERVER.
+   */
+  public static final String SERVER = "Server URL";
+  /**
+   * The constant CHEFUSER.
+   */
+  public static final String CHEFUSER = "User";
+  /**
+   * The constant KEY.
+   */
+  public static final String KEY = "Key Path";
+  /**
+   * The constant ORG.
+   */
+  public static final String ORG = "Organization";
 
-  public static final String chefConfigState = "ChefConfig";
+  /**
+   * The constant CHEF_CONFIG_STATE.
+   */
+  public static final String CHEF_CONFIG_STATE = "ChefConfig";
 
-
+  /**
+   * getConfig.
+   * @return chefConfig
+   */
   public String getCommandIdentifier() {
     return "chefConfig";
   }
 
+  /**
+   * Command description for help.
+   *
+   * @return String
+   */
   public String getDescription() {
     return "Configure the Chef Server";
   }
 
+  /**
+   * Admin Role.
+   * @return admin
+   */
   public String getRole() {
     return UserService.ADMIN;
   }
 
-  protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
-
-    morseBot.sendReplyKeyboardMessage(user,chat, "Select option", server, chefuser, key, org);
-    return chefConfigState;
+  /**
+   * Allows the user to setup the chef environment the bot will connect too.
+   * @param morseBot morse bot
+   * @param user user
+   * @param chat char
+   * @param arguments additional arguments. Ignored by this command
+   * @return configure state
+   */
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String... arguments) {
+    morseBot.sendReplyKeyboardMessage(user, chat, "Select option", SERVER, CHEFUSER, KEY, ORG);
+    return CHEF_CONFIG_STATE;
   }
 }

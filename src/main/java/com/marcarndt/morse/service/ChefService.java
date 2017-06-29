@@ -127,7 +127,7 @@ public class ChefService {
 
     File file = new File(keyPath);
     if (!file.exists()) {
-      throw new MorseBotException("cannot find key file " + keyPath);
+      throw new MorseBotException("cannot find KEY file " + keyPath);
     }
 
     chefDetails.setKeyPath(keyPath);

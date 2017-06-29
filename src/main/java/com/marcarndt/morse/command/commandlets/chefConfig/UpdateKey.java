@@ -1,6 +1,7 @@
-package com.marcarndt.morse.command.commandlets.chef;
+package com.marcarndt.morse.command.commandlets.chefConfig;
 
 import com.marcarndt.morse.MorseBot;
+import com.marcarndt.morse.MorseBotException;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
@@ -12,20 +13,27 @@ import javax.inject.Inject;
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class UpdateUser implements Commandlet {
+public class UpdateKey implements Commandlet {
 
   @Inject
   ChefService chefService;
 
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(User.ChefUserState);
+    return state.equals(Key.ChefKeyState);
   }
 
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
-    String user = message.getText();
-    chefService.updateUser(user);
-    morseBot.sendMessage("Updated user", message.getChatId().toString());
+    String keyPath = message.getText();
+
+    try {
+      chefService.updateKey(keyPath);
+    } catch (MorseBotException e) {
+      morseBot.sendMessage(e.getMessage(), message.getChatId().toString());
+    }
+
+    morseBot.sendMessage("Key Updated", message.getChatId().toString());
+
   }
 
   public String getNewState(Message message, String command) {
