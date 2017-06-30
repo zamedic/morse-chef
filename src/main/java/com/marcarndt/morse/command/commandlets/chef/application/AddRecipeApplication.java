@@ -32,7 +32,7 @@ public class AddRecipeApplication implements Commandlet {
    */
   @Override
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(AddRecipe.addChefRecipeState);
+    return state.equals(AddRecipe.ADD_CHEF_RECIPE);
   }
 
   /**

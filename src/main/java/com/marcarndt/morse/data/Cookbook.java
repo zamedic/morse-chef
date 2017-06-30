@@ -12,52 +12,110 @@ import org.mongodb.morphia.annotations.Reference;
 @Entity
 public class Cookbook {
 
+  /**
+   * Object ID.
+   */
   @Id
-  ObjectId objectId;
+  private ObjectId objectId;
+  /**
+   * Cookbook Description
+   */
+  private String description;
+  /**
+   * Cookbook Name
+   */
+  private String cookbookName;
 
-  String description;
-  String cookbook;
-
+  /**
+   * Application associated to the cookbookName.
+   */
   @Reference
-  Application application;
+  private Application application;
 
-  public Cookbook() {
-  }
 
   /**
    * Cookbook Entity.
+   *
    * @param description Cookbook description
-   * @param cookbook cookbook name
+   * @param cookbookName cookbookName name
    * @param application Application object
    */
-  public Cookbook(String description, String cookbook,
-      Application application) {
+  public Cookbook(final String description, final String cookbookName,
+      final Application application) {
     this.description = description;
-    this.cookbook = cookbook;
+    this.cookbookName = cookbookName;
     this.application = application;
   }
 
+  /**
+   * Gets description.
+   *
+   * @return the description
+   */
   public String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
+  /**
+   * Sets description.
+   *
+   * @param description the description
+   */
+  public void setDescription(final String description) {
     this.description = description;
   }
 
-  public String getCookbook() {
-    return cookbook;
+  /**
+   * Gets cookbookName.
+   *
+   * @return the cookbookName
+   */
+  public String getCookbookName() {
+    return cookbookName;
   }
 
-  public void setCookbook(String cookbook) {
-    this.cookbook = cookbook;
+  /**
+   * Sets cookbookName.
+   *
+   * @param cookbookName the cookbookName
+   */
+  public void setCookbookName(final String cookbookName) {
+    this.cookbookName = cookbookName;
   }
 
+  /**
+   * Gets application.
+   *
+   * @return the application
+   */
   public Application getApplication() {
     return application;
   }
 
-  public void setApplication(Application application) {
+  /**
+   * Sets application.
+   *
+   * @param application the application
+   */
+  public void setApplication(final Application application) {
     this.application = application;
+  }
+
+  /**
+   * Gets object id.
+   *
+   * @return the object id
+   */
+  public ObjectId getObjectId() {
+    return objectId;
+  }
+
+  /**
+   * Sets object id.
+   *
+   * @param objectId the object id
+   */
+  public void setObjectId(final ObjectId objectId) {
+    this.objectId = objectId;
   }
 }

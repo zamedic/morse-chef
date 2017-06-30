@@ -13,26 +13,55 @@ import javax.ejb.Stateless;
 @Stateless
 public class AddRecipeDescription implements Commandlet {
 
-  public static final String addRecipeDescription = "Add chef recipe description";
+  /**
+   * State.
+   */
+  public static final String STATE = "Add chef recipe description";
 
+  /**
+   * checks if the commandlet can be executed.
+   * @param message input message
+   * @param state current state
+   * @return true if this came from {@link AddRecipeApplication}
+   */
   @Override
-  public boolean canHandleCommand(Message message, String state) {
+  public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(AddRecipeApplication.addRecipeApplicationState);
   }
 
+  /**
+   * Asks user for cookbook name.
+   * @param message input message
+   * @param state current state
+   * @param parameters current paramters
+   * @param morseBot morsebot
+   */
   @Override
-  public void handleCommand(Message message, String state, List<String> parameters,
-      MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state, final List<String> parameters,
+      final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Cookbook Name");
   }
 
+  /**
+   * STATE.
+   * @param message current message
+   * @param command current command
+   * @return STATE
+   */
   @Override
-  public String getNewState(Message message, String command) {
-    return addRecipeDescription;
+  public String getNewState(final Message message, final String command) {
+    return STATE;
   }
 
+  /**
+   * adds the recipe description to the return list.
+   * @param message input message
+   * @param state current state
+   * @param parameters current paramters
+   * @return current parameters + recipe description provided
+   */
   @Override
-  public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     parameters.add(message.getText());
     return parameters;
   }

@@ -15,8 +15,11 @@ import javax.inject.Inject;
 @Stateless
 public class UpdateOrg implements Commandlet {
 
+  /**
+   * Chef Service.
+   */
   @Inject
-  ChefService chefService;
+  private transient ChefService chefService;
 
   public boolean canHandleCommand(Message message, String state) {
     return state.equals(Org.ChefOrgStage);

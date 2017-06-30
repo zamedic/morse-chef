@@ -19,7 +19,7 @@ public class AddRecipeCookbook implements Commandlet {
    * The Chef application service.
    */
   @Inject
-  ChefApplicationService chefApplicationService;
+  private transient ChefApplicationService chefApplicationService;
 
   /**
    * Checks if the state is correct to execute the command.
@@ -29,7 +29,7 @@ public class AddRecipeCookbook implements Commandlet {
    */
   @Override
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(AddRecipeDescription.addRecipeDescription);
+    return state.equals(AddRecipeDescription.STATE);
   }
 
   /**
