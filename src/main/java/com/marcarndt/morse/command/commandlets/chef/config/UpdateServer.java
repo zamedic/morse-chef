@@ -30,7 +30,7 @@ public class UpdateServer implements Commandlet {
    * @return true if this can execute
    */
   public boolean canHandleCommand(final Message message, final String state) {
-    return state.equals(Server.ChefServerState);
+    return state.equals(Server.STATE);
   }
 
   /**

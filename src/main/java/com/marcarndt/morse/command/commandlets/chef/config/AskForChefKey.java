@@ -1,35 +1,37 @@
 package com.marcarndt.morse.command.commandlets.chef.config;
 
 import com.marcarndt.morse.MorseBot;
+import com.marcarndt.morse.command.ChefConfigure;
 import com.marcarndt.morse.command.commandlet.Commandlet;
-import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
 
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  * Created by arndt on 2017/05/04.
  */
 @Stateless
-public class UpdateUser implements Commandlet {
+public class AskForChefKey implements Commandlet {
 
   /**
-   * Chef Service.
+   * The constant STATE.
    */
-  @Inject
-  private transient ChefService chefService;
+  public static final String STATE = "ChefKey";
 
   /**
-   * @inheritDoc
+   * Checks if the commandlet can be executed
+   * @param message input message
+   * @param state current state
+   * @return true if this is a AskForChefKey command for {@link ChefConfigure}
    */
   public boolean canHandleCommand(final Message message, final String state) {
-    return state.equals(User.ChefUserState);
+    return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
+        .equals(ChefConfigure.KEY);
   }
 
   /**
-   * Updates the Chef User.
+   * Asks the user for the key path
    * @param message input message
    * @param state current state
    * @param parameters current parameters
@@ -37,20 +39,25 @@ public class UpdateUser implements Commandlet {
    */
   public void handleCommand(final Message message, final String state, final List<String> parameters,
       final MorseBot morseBot) {
-    final String user = message.getText();
-    chefService.updateUser(user);
-    morseBot.sendMessage("Updated user", message.getChatId().toString());
+    morseBot.sendReplyMessage(message, "Enter KEY path");
   }
 
   /**
-   * @inheritDoc
+   * STATE
+   * @param message input message
+   * @param command command
+   * @return STATE
    */
   public String getNewState(final Message message, final String command) {
-    return null;
+    return STATE;
   }
 
   /**
-   * @inheritDoc
+   * Null
+   * @param message input message
+   * @param state current state
+   * @param parameters current parameters
+   * @return Null
    */
   public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     return null;

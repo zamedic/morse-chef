@@ -24,7 +24,7 @@ public class ChefConfigure extends BaseCommand {
   /**
    * The constant KEY.
    */
-  public static final String KEY = "Key Path";
+  public static final String KEY = "AskForChefKey Path";
   /**
    * The constant ORG.
    */

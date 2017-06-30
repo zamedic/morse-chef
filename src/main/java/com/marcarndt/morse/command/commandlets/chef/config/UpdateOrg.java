@@ -4,7 +4,6 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
-
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,31 +20,43 @@ public class UpdateOrg implements Commandlet {
   @Inject
   private transient ChefService chefService;
 
-  public boolean canHandleCommand(Message message, String state) {
-    return state.equals(Org.ChefOrgStage);
+  /**
+   * @inheritDoc
+   */
+  public boolean canHandleCommand(final Message message, final String state) {
+    return state.equals(ChefConfigOrg.STATE);
   }
 
   /**
    * Updates the chef org.
-   * @param message Chef Org message
+   *
+   * @param message Chef ChefConfigOrg message
    * @param state current state
    * @param parameters current parameters
    * @param morseBot morse bot
    */
-  public void handleCommand(Message message, String state, List<String> parameters,
-      MorseBot morseBot) {
-    String org = message.getText();
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters,
+      final MorseBot morseBot) {
+    final String org = message.getText();
     chefService.updateOrg(org);
     morseBot.sendMessage("Updated ORG", message.getChatId().toString());
 
 
   }
 
-  public String getNewState(Message message, String command) {
+  /**
+   * @inheritDoc
+   */
+  public String getNewState(final Message message, final String command) {
     return null;
   }
 
-  public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+  /**
+   * @inheritDoc
+   */
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

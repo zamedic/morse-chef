@@ -14,23 +14,38 @@ import javax.ejb.Stateless;
 @Stateless
 public class Server implements Commandlet {
 
-  public static String ChefServerState = "ChefServer";
+  /**
+   * The constant STATE.
+   */
+  public static final String STATE = "ChefServer";
 
-  public boolean canHandleCommand(Message message, String state) {
+  /**
+   * @inheritDoc
+   */
+  public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
         .equals(ChefConfigure.SERVER);
   }
 
-  public void handleCommand(Message message, String state, List<String> parameters,
-      MorseBot morseBot) {
+  /**
+   * @inheritDoc
+   */
+  public void handleCommand(final Message message, final String state, final List<String> parameters,
+      final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Enter chef SERVER URL");
   }
 
-  public String getNewState(Message message, String command) {
-    return ChefServerState;
+  /**
+   * @inheritDoc
+   */
+  public String getNewState(final Message message, final String command) {
+    return STATE;
   }
 
-  public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+  /**
+   * @inheritDoc
+   */
+  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     return null;
   }
 }

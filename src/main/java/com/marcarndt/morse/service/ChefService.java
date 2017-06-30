@@ -237,7 +237,7 @@ public class ChefService {
     try {
       addCert(server);
     } catch (KeyStoreException e) {
-      LOG.log(Level.SEVERE, "Key Store exception", e);
+      LOG.log(Level.SEVERE, "AskForChefKey Store exception", e);
       throw new MorseBotException(
           ERROR + e.getMessage(), e);
     } catch (IOException e) {
@@ -253,7 +253,7 @@ public class ChefService {
       throw new MorseBotException(
           ERROR + e.getMessage(), e);
     } catch (KeyManagementException e) {
-      LOG.log(Level.SEVERE, "Key management exception", e);
+      LOG.log(Level.SEVERE, "AskForChefKey management exception", e);
       throw new MorseBotException(
           ERROR + e.getMessage(), e);
     }

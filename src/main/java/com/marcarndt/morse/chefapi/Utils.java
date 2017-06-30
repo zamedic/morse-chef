@@ -78,7 +78,7 @@ public final class Utils {
       final byte[] signature = instance.sign();
       outStr = Base64.encode(signature);
     } catch (InvalidKeyException e) {
-      LOG.log(Level.SEVERE,"Invalid Key",e);
+      LOG.log(Level.SEVERE,"Invalid AskForChefKey",e);
     } catch (IOException e) {
       LOG.log(Level.SEVERE,"IO Error",e);
     } catch (SignatureException e) {

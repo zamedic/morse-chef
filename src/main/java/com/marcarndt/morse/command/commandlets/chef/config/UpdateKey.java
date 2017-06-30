@@ -26,10 +26,10 @@ public class UpdateKey implements Commandlet {
    * checks if the current process can be executed.
    * @param message input message
    * @param state current state
-   * @return Key.ChefKeyState
+   * @return AskForChefKey.STATE
    */
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(Key.ChefKeyState);
+    return state.equals(AskForChefKey.STATE);
   }
 
   /**
@@ -49,7 +49,7 @@ public class UpdateKey implements Commandlet {
       morseBot.sendMessage(e.getMessage(), message.getChatId().toString());
     }
 
-    morseBot.sendMessage("Key Updated", message.getChatId().toString());
+    morseBot.sendMessage("AskForChefKey Updated", message.getChatId().toString());
 
   }
 

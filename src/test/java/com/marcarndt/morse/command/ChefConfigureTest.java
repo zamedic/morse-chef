@@ -67,7 +67,7 @@ public class ChefConfigureTest {
   public void performCommand() throws Exception {
     String result = chefConfigure.performCommand(morseBot, user, chat, null);
     Mockito.verify(morseBot)
-        .sendReplyKeyboardMessage(user, chat, "Select option", "Server URL", "User", "Key Path",
+        .sendReplyKeyboardMessage(user, chat, "Select option", "Server URL", "User", "AskForChefKey Path",
             "Organization");
     Assert.assertEquals("ChefConfig", result);
 
