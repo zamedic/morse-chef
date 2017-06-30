@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 /**
  * The type Post.
  */
-public class Post extends ApiMethod {//NOPMD
+public class Post extends ApiMethod { //NOPMD
 
   /**
    * Instantiates a new Post.

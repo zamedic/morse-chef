@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.service.UserService;
 import com.marcarndt.morse.telegrambots.api.objects.Chat;
 import com.marcarndt.morse.telegrambots.api.objects.User;
+
 import javax.ejb.Stateless;
 
 /**
@@ -67,7 +68,8 @@ public class ChefConfigure extends BaseCommand {
    * @param arguments additional arguments. Ignored by this command
    * @return configure state
    */
-  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String... arguments) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat,
+      final String... arguments) {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select option", SERVER, CHEFUSER, KEY, ORG);
     return CHEF_CONFIG_STATE;
   }

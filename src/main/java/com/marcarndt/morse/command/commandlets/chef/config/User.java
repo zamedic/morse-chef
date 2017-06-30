@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.ChefConfigure;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Stateless;
 

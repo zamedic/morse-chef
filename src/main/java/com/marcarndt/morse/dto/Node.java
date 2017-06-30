@@ -10,6 +10,13 @@ public class Node {
   String platform;
   String ipAddress;
 
+  /**
+   * Node DTO Object.
+   * @param name node name
+   * @param environment node environment
+   * @param platform node platform
+   * @param ipAddress node IP Address
+   */
   public Node(String name, String environment, String platform, String ipAddress) {
     this.name = name;
     this.environment = environment;
@@ -51,9 +58,9 @@ public class Node {
 
   @Override
   public String toString() {
-    return "name='" + name + '\'' +
-        ", environment='" + environment + '\'' +
-        ", platform='" + platform + '\'';
+    return "name='" + name + '\''
+        + ", environment='" + environment + '\''
+        + ", platform='" + platform + '\'';
 
   }
 }

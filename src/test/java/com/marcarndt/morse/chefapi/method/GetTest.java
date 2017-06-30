@@ -1,14 +1,9 @@
 package com.marcarndt.morse.chefapi.method;
 
 import static junit.framework.TestCase.fail;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Date;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Assert;
@@ -19,6 +14,10 @@ import org.mockito.Spy;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Date;
 
 /**
  * Created by arndt on 2017/06/29.
@@ -47,7 +46,7 @@ public class GetTest {
     } catch (Exception e) {
       fail(e.getMessage());
     }
-    when(date.getTime()).thenReturn(1234567890l);
+    when(date.getTime()).thenReturn(1234567890L);
     Get get = new Get(getMethod);
     get.setPemPath(getClass().getResource("/2048b-rsa-example-keypair.pem").getPath());
     get.setUserId("zamedic");
@@ -61,12 +60,18 @@ public class GetTest {
     verify(getMethod).addRequestHeader("X-Ops-Content-Hash","2jmj7l5rSw0yVb/vlWAYkK/YBwk=");
     verify(getMethod).addRequestHeader("X-Ops-Sign","version=1.0");
 
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-1","kF8U8VEsNKUJ6FGKtVI0BjoRT+dEcCAVGCA5KdVZzfV52fflJb7pvabK1Y23");
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-2","YjxuiF/htD41XzowW4zgq28kAB3KnFPMdOh2qdOHI0b+5gUHVgb60t4gPlAy");
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-3","F4gTlHRpGJZeN7H0M4tKs185NZP3IzNie8/QL7NNuvG1Cl1juOgkAOqZXyTH");
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-4","2Gmi8K+0yr+dHE7TiSqCxFmDgRls+TKktcSR10uCCdEQWvgNjHL8UGEXUAo+");
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-5","TQhtaA2Ex43qBV5KZMpKo1Fko7PAzmvCcdf6yB0pyMKq4Y3b6XEnPlxEdEb8");
-    verify(getMethod).addRequestHeader("X-Ops-Authorization-6","ZNPXDF2g1KBi50FSdRPfKrxngbLNBrwjDkGyu60NJg==");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-1",
+        "kF8U8VEsNKUJ6FGKtVI0BjoRT+dEcCAVGCA5KdVZzfV52fflJb7pvabK1Y23");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-2",
+        "YjxuiF/htD41XzowW4zgq28kAB3KnFPMdOh2qdOHI0b+5gUHVgb60t4gPlAy");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-3",
+        "F4gTlHRpGJZeN7H0M4tKs185NZP3IzNie8/QL7NNuvG1Cl1juOgkAOqZXyTH");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-4",
+        "2Gmi8K+0yr+dHE7TiSqCxFmDgRls+TKktcSR10uCCdEQWvgNjHL8UGEXUAo+");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-5",
+        "TQhtaA2Ex43qBV5KZMpKo1Fko7PAzmvCcdf6yB0pyMKq4Y3b6XEnPlxEdEb8");
+    verify(getMethod).addRequestHeader("X-Ops-Authorization-6",
+        "ZNPXDF2g1KBi50FSdRPfKrxngbLNBrwjDkGyu60NJg==");
 
   }
 

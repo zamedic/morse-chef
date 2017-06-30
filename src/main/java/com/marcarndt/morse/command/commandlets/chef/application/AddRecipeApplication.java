@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
 import com.marcarndt.swarm.service.ApplicationService;
+
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
@@ -48,7 +49,7 @@ public class AddRecipeApplication implements Commandlet {
   }
 
   /**
-   * Returns next state
+   * Returns next state.
    * @param message message
    * @param state current state
    * @return addRecipeApplicationState
@@ -59,14 +60,14 @@ public class AddRecipeApplication implements Commandlet {
   }
 
   /**
-   * Adds answer to paramter list
-   * @param message
-   * @param s
-   * @param list
-   * @return
+   * Adds answer to paramter list.
+   * @param message message
+   * @param state state
+   * @param list paramters
+   * @return new list with the recipe added
    */
   @Override
-  public List<String> getNewStateParams(Message message, String s, List<String> list) {
+  public List<String> getNewStateParams(Message message, String state, List<String> list) {
     return Arrays.asList(message.getText());
   }
 }

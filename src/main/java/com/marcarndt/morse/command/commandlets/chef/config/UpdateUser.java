@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,6 +22,13 @@ public class UpdateUser implements Commandlet {
     return state.equals(User.ChefUserState);
   }
 
+  /**
+   * Updates the Chef User.
+   * @param message input message
+   * @param state current state
+   * @param parameters current parameters
+   * @param morseBot morse bot
+   */
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
     String user = message.getText();

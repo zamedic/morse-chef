@@ -28,7 +28,8 @@ public class ChefApplication extends BaseCommand {
    * @return New state
    */
   @Override
-  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String[] strings) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat,
+      final String[] strings) {
     return null;
     //TODO
   }

@@ -24,6 +24,12 @@ public class Cookbook {
   public Cookbook() {
   }
 
+  /**
+   * Cookbook Entity.
+   * @param description Cookbook description
+   * @param cookbook cookbook name
+   * @param application Application object
+   */
   public Cookbook(String description, String cookbook,
       Application application) {
     this.description = description;

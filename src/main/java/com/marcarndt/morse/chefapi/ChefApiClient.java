@@ -15,15 +15,15 @@ public class ChefApiClient {
   /**
    * Endpoint.
    */
-  private transient final String endpoint;
+  private final transient  String endpoint;
   /**
    * User ID.
    */
-  private transient final String userId;
+  private final transient  String userId;
   /**
    * Path to the chef pem key.
    */
-  private transient final String pemPath;
+  private final transient  String pemPath;
 
   /**
    * Instantiates a new Chef api client.

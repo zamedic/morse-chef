@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefApplicationService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -63,7 +64,7 @@ public class AddRecipeCookbook implements Commandlet {
   }
 
   /**
-   * Null - We are done
+   * Null - We are done.
    * @param message inpuit message
    * @param state current state
    * @param parameters parameters

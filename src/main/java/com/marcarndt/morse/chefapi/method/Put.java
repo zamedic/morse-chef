@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.methods.PutMethod;
 /**
  * The type Put.
  */
-public class Put extends ApiMethod {//NOPMD
+public class Put extends ApiMethod { //NOPMD
 
   /**
    * Instantiates a new Put.

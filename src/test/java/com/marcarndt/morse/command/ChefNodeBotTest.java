@@ -41,7 +41,7 @@ public class ChefNodeBotTest {
   public void performCommand() throws Exception {
     Node node = new Node("Test","Test-Env","Test-platform","Test-IP");
     Mockito.when(chefService.getNode("test")).thenReturn(node);
-    Mockito.when(chat.getId()).thenReturn(1234l);
+    Mockito.when(chat.getId()).thenReturn(1234L);
     String resposne = chefNodeBot.performCommand(morseBot, user, chat, "test");
     Mockito.verify(morseBot).sendMessage("Test - Test-Env - Test-platform","1234");
     assertNull(resposne);

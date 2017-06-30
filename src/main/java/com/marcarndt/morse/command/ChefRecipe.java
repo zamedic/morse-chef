@@ -43,7 +43,8 @@ public class ChefRecipe extends BaseCommand {
    * @return Chef Recipe Admin
    */
   @Override
-  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String[] strings) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat,
+      final String[] strings) {
     morseBot.sendReplyKeyboardMessage(user, chat, "What would you like to do? ", ADD_A_COOKBOOK,
         DELETE_A_COOKBOOK);
     return CHEF_RECIPE_STATE;
@@ -59,7 +60,7 @@ public class ChefRecipe extends BaseCommand {
   }
 
   /**
-   * Description for help file
+   * Description for help file.
    * @return String
    */
   @Override

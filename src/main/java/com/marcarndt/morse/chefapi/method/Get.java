@@ -5,7 +5,7 @@ import org.apache.commons.httpclient.HttpMethod;
 /**
  * The type Get.
  */
-public class Get extends ApiMethod {//NOPMD
+public class Get extends ApiMethod { //NOPMD
 
   /**
    * Instantiates a new Get.

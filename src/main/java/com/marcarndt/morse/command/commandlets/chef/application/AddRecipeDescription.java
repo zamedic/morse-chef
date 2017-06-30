@@ -3,6 +3,7 @@ package com.marcarndt.morse.command.commandlets.chef.application;
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -12,7 +13,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class AddRecipeDescription implements Commandlet {
 
-  public final static String addRecipeDescription = "Add chef recipe description";
+  public static final String addRecipeDescription = "Add chef recipe description";
 
   @Override
   public boolean canHandleCommand(Message message, String state) {

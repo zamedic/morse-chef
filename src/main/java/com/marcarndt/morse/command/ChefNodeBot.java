@@ -6,6 +6,7 @@ import com.marcarndt.morse.dto.Node;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Chat;
 import com.marcarndt.morse.telegrambots.api.objects.User;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -46,7 +47,8 @@ public class ChefNodeBot extends BaseCommand {
    * @param arguments first argument is the chef node
    * @return Null
    */
-  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String... arguments) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat,
+      final String... arguments) {
     Node node = null;
     try {
       if (arguments.length != 1) {
@@ -70,7 +72,7 @@ public class ChefNodeBot extends BaseCommand {
   }
 
   /**
-   * chef
+   * chef.
    *
    * @return chef
    */
@@ -80,7 +82,7 @@ public class ChefNodeBot extends BaseCommand {
   }
 
   /**
-   * Description for the help file
+   * Description for the help file.
    *
    * @return String
    */

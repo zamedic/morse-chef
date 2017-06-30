@@ -5,6 +5,9 @@ import com.marcarndt.morse.chefapi.ChefApiClient;
 import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
 import com.marcarndt.morse.dto.Node;
+
+import org.mongodb.morphia.query.Query;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,7 +41,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import org.mongodb.morphia.query.Query;
 
 /**
  * Created by arndt on 2017/04/10.
@@ -53,7 +55,8 @@ public class ChefService {
   /**
    * Error Message.
    */
-  public static final String ERROR = "we were unable to download and add the certificate to the default keystore. ";
+  public static final String ERROR = "we were unable to download and add the certificate "
+      + "to the default keystore. ";
 
   /**
    * The Mongo service.
@@ -94,7 +97,7 @@ public class ChefService {
    *
    * @return the search url
    */
-  public String getSearchURL() {
+  public String getSearchUrl() {
     final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/search").execute();
     return response.getResponseBodyAsString();
@@ -270,7 +273,8 @@ public class ChefService {
   }
 
   private void addCert(final String url)
-      throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, KeyManagementException {
+      throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException,
+      KeyManagementException {
 
     final char sep = File.separatorChar;
     final File dir = new File(System.getProperty("java.home") + sep + "lib" + sep + "security");
@@ -329,10 +333,10 @@ public class ChefService {
        * @return null
        */
       @Override
-      public X509Certificate[] getAcceptedIssuers() {//NOPMD
+      public X509Certificate[] getAcceptedIssuers() { //NOPMD
         return null;
       }
-    }}, new java.security.SecureRandom());
+    } }, new java.security.SecureRandom());
     conn.setSSLSocketFactory(sslContext.getSocketFactory());
     conn.connect();
     return conn.getServerCertificates();

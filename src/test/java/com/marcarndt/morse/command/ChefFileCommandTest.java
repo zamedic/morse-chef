@@ -1,19 +1,22 @@
 package com.marcarndt.morse.command;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.service.SSHService;
 import com.marcarndt.morse.telegrambots.api.objects.Chat;
 import com.marcarndt.morse.telegrambots.api.objects.User;
-import java.util.Arrays;
-import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by arndt on 2017/06/29.

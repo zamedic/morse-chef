@@ -4,6 +4,7 @@ import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.service.SSHService;
 import com.marcarndt.morse.telegrambots.api.objects.Chat;
 import com.marcarndt.morse.telegrambots.api.objects.User;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -47,7 +48,7 @@ public class ExecuteCommand extends BaseCommand {
   }
 
   /**
-   * Allows the user to select a command to execute
+   * Allows the user to select a command to execute.
    * @param morseBot morse bot
    * @param user user
    * @param chat chat

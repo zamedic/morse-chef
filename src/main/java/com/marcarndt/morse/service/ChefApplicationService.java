@@ -3,6 +3,7 @@ package com.marcarndt.morse.service;
 import com.marcarndt.morse.data.Cookbook;
 import com.marcarndt.swarm.data.Application;
 import com.marcarndt.swarm.service.ApplicationService;
+
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
