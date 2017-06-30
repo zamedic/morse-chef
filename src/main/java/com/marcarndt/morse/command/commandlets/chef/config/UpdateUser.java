@@ -22,7 +22,7 @@ public class UpdateUser implements Commandlet {
   private transient ChefService chefService;
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(UpdateChefUser.STATE);
@@ -43,14 +43,14 @@ public class UpdateUser implements Commandlet {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public String getNewState(final Message message, final String command) {
     return null;
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     return null;
