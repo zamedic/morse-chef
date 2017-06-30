@@ -13,26 +13,50 @@ import javax.inject.Inject;
 @Stateless
 public class ExecuteCommand extends BaseCommand {
 
+  /**
+   * The Ssh service.
+   */
   @Inject
-  SSHService sshService;
+  private transient SSHService sshService;
 
+  /**
+   * chefExecute.
+   * @return chefExecute
+   */
   @Override
   public String getCommandIdentifier() {
     return "chefExecute";
   }
 
+  /**
+   * Message for help.
+   * @return String
+   */
   @Override
   public String getDescription() {
     return "Execute a predefined SSH Command on a chef node";
   }
 
+  /**
+   * Trusted.
+   * @return Trusted.
+   */
   @Override
   public String getRole() {
     return "Trusted";
   }
 
+  /**
+   * Allows the user to select a command to execute
+   * @param morseBot morse bot
+   * @param user user
+   * @param chat chat
+   * @param arguments ignored for this opperation
+   * @return TODO
+   */
   protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select command", sshService.getCommandNames());
+    //TODO
     return null;
   }
 }

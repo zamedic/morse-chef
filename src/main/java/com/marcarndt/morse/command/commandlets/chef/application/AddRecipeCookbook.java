@@ -14,15 +14,30 @@ import javax.inject.Inject;
 @Singleton
 public class AddRecipeCookbook implements Commandlet {
 
+  /**
+   * The Chef application service.
+   */
   @Inject
   ChefApplicationService chefApplicationService;
 
-
+  /**
+   * Checks if the state is correct to execute the command.
+   * @param message input message
+   * @param state current stage
+   * @return true if this came from {@link AddRecipeDescription}
+   */
   @Override
   public boolean canHandleCommand(Message message, String state) {
     return state.equals(AddRecipeDescription.addRecipeDescription);
   }
 
+  /**
+   * Adds a cookbook to an application.
+   * @param message input message
+   * @param state current state
+   * @param parameters current parameters
+   * @param morseBot morse bot
+   */
   @Override
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
@@ -36,11 +51,24 @@ public class AddRecipeCookbook implements Commandlet {
             + application, message.getChatId().toString());
   }
 
+  /**
+   * Null - end of the process.
+   * @param message input message
+   * @param command input command
+   * @return null
+   */
   @Override
   public String getNewState(Message message, String command) {
     return null;
   }
 
+  /**
+   * Null - We are done
+   * @param message inpuit message
+   * @param state current state
+   * @param parameters parameters
+   * @return null
+   */
   @Override
   public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
     return null;

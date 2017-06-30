@@ -17,8 +17,8 @@ public class AddRecipe implements Commandlet {
 
   @Override
   public boolean canHandleCommand(Message message, String state) {
-    return state.equals(ChefRecipe.chefRecipeAdminState) && message.getText()
-        .equals(ChefRecipe.addCookbook);
+    return state.equals(ChefRecipe.CHEF_RECIPE_STATE) && message.getText()
+        .equals(ChefRecipe.ADD_A_COOKBOOK);
   }
 
   @Override

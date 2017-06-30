@@ -15,13 +15,29 @@ import javax.inject.Inject;
 @Stateless
 public class UpdateKey implements Commandlet {
 
+  /**
+   * The Chef service.
+   */
   @Inject
-  ChefService chefService;
+  private transient ChefService chefService;
 
+  /**
+   * checks if the current process can be executed.
+   * @param message input message
+   * @param state current state
+   * @return Key.ChefKeyState
+   */
   public boolean canHandleCommand(Message message, String state) {
     return state.equals(Key.ChefKeyState);
   }
 
+  /**
+   * Updates the key as provided.
+   * @param message input message
+   * @param state current state
+   * @param parameters current parameters
+   * @param morseBot morse bot
+   */
   public void handleCommand(Message message, String state, List<String> parameters,
       MorseBot morseBot) {
     String keyPath = message.getText();
@@ -36,10 +52,23 @@ public class UpdateKey implements Commandlet {
 
   }
 
+  /**
+   * Null - end of the process.
+   * @param message message
+   * @param command command
+   * @return Null - Done
+   */
   public String getNewState(Message message, String command) {
     return null;
   }
 
+  /**
+   * Null - No new parameters.
+   * @param message input message
+   * @param state current state
+   * @param parameters current parameters
+   * @return null.
+   */
   public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
     return null;
   }

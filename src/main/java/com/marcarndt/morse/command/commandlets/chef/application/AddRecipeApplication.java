@@ -13,26 +13,58 @@ import javax.inject.Inject;
  */
 public class AddRecipeApplication implements Commandlet {
 
+  /**
+   * The constant addRecipeApplicationState.
+   */
   public static final String addRecipeApplicationState = "Add Recipe Application";
+  /**
+   * The Application service.
+   */
   @Inject
-  ApplicationService applicationService;
+  private transient ApplicationService applicationService;
 
+  /**
+   * Verifies state.
+   * @param message message
+   * @param state state
+   * @return true when this came from AddRecipe
+   */
   @Override
-  public boolean canHandleCommand(Message message, String s) {
-    return s.equals(AddRecipe.addChefRecipeState);
+  public boolean canHandleCommand(Message message, String state) {
+    return state.equals(AddRecipe.addChefRecipeState);
   }
 
+  /**
+   * Asks user to select an application.
+   * @param message message
+   * @param state current state
+   * @param list parameters
+   * @param morseBot morsebot
+   */
   @Override
-  public void handleCommand(Message message, String s, List<String> list, MorseBot morseBot) {
+  public void handleCommand(Message message, String state, List<String> list, MorseBot morseBot) {
     morseBot.sendReplyKeyboardMessage(message, "Select application",
         applicationService.getApplications());
   }
 
+  /**
+   * Returns next state
+   * @param message message
+   * @param state current state
+   * @return addRecipeApplicationState
+   */
   @Override
-  public String getNewState(Message message, String s) {
+  public String getNewState(Message message, String state) {
     return addRecipeApplicationState;
   }
 
+  /**
+   * Adds answer to paramter list
+   * @param message
+   * @param s
+   * @param list
+   * @return
+   */
   @Override
   public List<String> getNewStateParams(Message message, String s, List<String> list) {
     return Arrays.asList(message.getText());
