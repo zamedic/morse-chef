@@ -17,7 +17,7 @@ public class ChefApiClient {
    */
   private final transient  String endpoint;
   /**
-   * User ID.
+   * UpdateChefUser ID.
    */
   private final transient  String userId;
   /**

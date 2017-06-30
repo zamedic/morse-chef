@@ -15,14 +15,14 @@ import javax.inject.Inject;
 public class AddRecipeApplication implements Commandlet {
 
   /**
-   * The constant addRecipeApplicationState.
+   * The constant STATE.
    */
-  public static final String addRecipeApplicationState = "Add Recipe Application";
+  public static final String STATE = "Add Recipe Application";
   /**
    * The Application service.
    */
   @Inject
-  private transient ApplicationService applicationService;
+  private transient ApplicationService appService;
 
   /**
    * Verifies state.
@@ -31,7 +31,7 @@ public class AddRecipeApplication implements Commandlet {
    * @return true when this came from AddRecipe
    */
   @Override
-  public boolean canHandleCommand(Message message, String state) {
+  public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(AddRecipe.ADD_CHEF_RECIPE);
   }
 
@@ -43,20 +43,20 @@ public class AddRecipeApplication implements Commandlet {
    * @param morseBot morsebot
    */
   @Override
-  public void handleCommand(Message message, String state, List<String> list, MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state, final List<String> list, final MorseBot morseBot) {
     morseBot.sendReplyKeyboardMessage(message, "Select application",
-        applicationService.getApplications());
+        appService.getApplications());
   }
 
   /**
    * Returns next state.
    * @param message message
    * @param state current state
-   * @return addRecipeApplicationState
+   * @return STATE
    */
   @Override
-  public String getNewState(Message message, String state) {
-    return addRecipeApplicationState;
+  public String getNewState(final Message message, final String state) {
+    return STATE;
   }
 
   /**
@@ -67,7 +67,7 @@ public class AddRecipeApplication implements Commandlet {
    * @return new list with the recipe added
    */
   @Override
-  public List<String> getNewStateParams(Message message, String state, List<String> list) {
+  public List<String> getNewStateParams(final Message message, final String state, final List<String> list) {
     return Arrays.asList(message.getText());
   }
 }

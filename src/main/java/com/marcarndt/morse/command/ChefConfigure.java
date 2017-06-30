@@ -20,7 +20,7 @@ public class ChefConfigure extends BaseCommand {
   /**
    * The constant CHEFUSER.
    */
-  public static final String CHEFUSER = "User";
+  public static final String CHEFUSER = "UpdateChefUser";
   /**
    * The constant KEY.
    */

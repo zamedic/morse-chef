@@ -19,7 +19,7 @@ public class AddRecipeCookbook implements Commandlet {
    * The Chef application service.
    */
   @Inject
-  private transient ChefApplicationService chefApplicationService;
+  private transient ChefApplicationService chefService;
 
   /**
    * Checks if the state is correct to execute the command.
@@ -28,7 +28,7 @@ public class AddRecipeCookbook implements Commandlet {
    * @return true if this came from {@link AddRecipeDescription}
    */
   @Override
-  public boolean canHandleCommand(Message message, String state) {
+  public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(AddRecipeDescription.STATE);
   }
 
@@ -40,13 +40,13 @@ public class AddRecipeCookbook implements Commandlet {
    * @param morseBot morse bot
    */
   @Override
-  public void handleCommand(Message message, String state, List<String> parameters,
-      MorseBot morseBot) {
-    String cookbook = message.getText();
-    String application = parameters.get(0);
-    String description = parameters.get(1);
+  public void handleCommand(final Message message, final String state, final List<String> parameters,
+      final MorseBot morseBot) {
+    final String cookbook = message.getText();
+    final String application = parameters.get(0);
+    final String description = parameters.get(1);
 
-    chefApplicationService.addRecipeToApplication(application, description, cookbook);
+    chefService.addRecipeToApplication(application, description, cookbook);
     morseBot.sendMessage(
         "Added cookbook " + cookbook + " with description " + description + " to application "
             + application, message.getChatId().toString());
@@ -59,7 +59,7 @@ public class AddRecipeCookbook implements Commandlet {
    * @return null
    */
   @Override
-  public String getNewState(Message message, String command) {
+  public String getNewState(final Message message, final String command) {
     return null;
   }
 
@@ -71,7 +71,7 @@ public class AddRecipeCookbook implements Commandlet {
    * @return null
    */
   @Override
-  public List<String> getNewStateParams(Message message, String state, List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
     return null;
   }
 }

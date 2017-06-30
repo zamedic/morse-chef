@@ -36,7 +36,7 @@ public class ApiMethod {
    */
   protected String reqBody = "";
   /**
-   * The User id.
+   * The UpdateChefUser id.
    */
   protected String userId = "";
   /**

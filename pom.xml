@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
 
   <name>Morse Chef Plugin</name>
-  <description>Plugin allows telegram to interact with chef nodes. Provides query, fetch file and
+  <description>Plugin allows telegram to interact with chef chefNodes. Provides query, fetch file and
     execute commands.
   </description>
   <url>https://github.com/zamedic/morse-chef</url>

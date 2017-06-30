@@ -55,7 +55,7 @@ public class ExecuteCommand extends BaseCommand {
    * @param arguments ignored for this opperation
    * @return TODO
    */
-  protected String performCommand(MorseBot morseBot, User user, Chat chat, String[] arguments) {
+  protected String performCommand(final MorseBot morseBot, final User user, final Chat chat, final String... arguments) {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select command", sshService.getCommandNames());
     //TODO
     return null;

@@ -3,8 +3,6 @@ package com.marcarndt.morse.service;
 import com.marcarndt.morse.data.Cookbook;
 import com.marcarndt.swarm.data.Application;
 import com.marcarndt.swarm.service.ApplicationService;
-
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -18,13 +16,12 @@ public class ChefApplicationService {
    * The Mongo service.
    */
   @Inject
-  MongoService mongoService;
+  private transient MongoService mongoService;
   /**
    * The Application service.
    */
   @Inject
-  ApplicationService applicationService;
-  private Logger logger = Logger.getLogger(ChefApplicationService.class.getName());
+  private transient ApplicationService appService;
 
   /**
    * Add recipe to application.
@@ -33,10 +30,10 @@ public class ChefApplicationService {
    * @param description the description
    * @param recipe the recipe
    */
-  public void addRecipeToApplication(String application, String description, String recipe) {
-    Application applicationObject = applicationService.getApplication(application);
+  public void addRecipeToApplication(final String application, final String description, final String recipe) {
+    final Application applicationObject = appService.getApplication(application);
 
-    Cookbook cookbook = new Cookbook(description, recipe, applicationObject);
+    final Cookbook cookbook = new Cookbook(description, recipe, applicationObject);
     mongoService.getDatastore().save(cookbook);
   }
 
@@ -47,7 +44,7 @@ public class ChefApplicationService {
    * @param description the description
    * @return the cookbook
    */
-  public Cookbook getCookbook(String description) {
+  public Cookbook getCookbook(final String description) {
     return mongoService.getDatastore().createQuery(Cookbook.class).field("description")
         .equal(description).get();
   }

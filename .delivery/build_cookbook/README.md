@@ -10,7 +10,7 @@ In the parent directory to this build_cookbook, the `config.json` can be modifie
 
 ## Test Kitchen - Local Verify Testing
 
-This cookbookName also has a `.kitchen.yml` which can be used to create local build nodes with Test Kitchen to perform the verification phases, `unit`, `syntax`, and `lint`. When running `kitchen converge`, the instances will be set up like Chef Delivery "build nodes" with the [delivery_build cookbookName](https://github.com/chef-cookbooks/delivery_build). The reason for this is to make sure that the same exact kind of nodes are used by this build cookbookName are run on the local workstation as would run Delivery. It will run `delivery job verify PHASE` for the parent project.
+This cookbookName also has a `.kitchen.yml` which can be used to create local build chefNodes with Test Kitchen to perform the verification phases, `unit`, `syntax`, and `lint`. When running `kitchen converge`, the instances will be set up like Chef Delivery "build chefNodes" with the [delivery_build cookbookName](https://github.com/chef-cookbooks/delivery_build). The reason for this is to make sure that the same exact kind of chefNodes are used by this build cookbookName are run on the local workstation as would run Delivery. It will run `delivery job verify PHASE` for the parent project.
 
 Modify the `.kitchen.yml` if necessary to change the platforms or other configuration to run the verify phases. After making changes in the parent project, `cd` into this directory (`.delivery/build_cookbook`), and run:
 
@@ -118,7 +118,7 @@ Chef Client finished, 3/32 resources updated in 54.665445968 seconds
 Finished converging <default-centos-71> (1m26.83s).
 ```
 
-Victory is ours! Our verify phase passed on the build nodes.
+Victory is ours! Our verify phase passed on the build chefNodes.
 
 We are ready to run this through our Delivery pipeline. Simply run `delivery review` on the local system from the parent project, and it will open a browser window up to the change we just added.
 
@@ -131,7 +131,7 @@ delivery review
 
 ### Why don't I just run rspec and foodcritic/rubocop on my local system?
 
-An objection to the Test Kitchen approach is that it is much faster to run the unit, lint, and syntax commands for the project on the local system. That is totally true, and also totally valid. Do that for the really fast feedback loop. However, the dance we do with Test Kitchen brings a much higher degree of confidence in the changes we're making, that everything will run on the build nodes in Chef Delivery. We strongly encourage this approach before actually pushing the changes to Delivery.
+An objection to the Test Kitchen approach is that it is much faster to run the unit, lint, and syntax commands for the project on the local system. That is totally true, and also totally valid. Do that for the really fast feedback loop. However, the dance we do with Test Kitchen brings a much higher degree of confidence in the changes we're making, that everything will run on the build chefNodes in Chef Delivery. We strongly encourage this approach before actually pushing the changes to Delivery.
 
 ### Why do I have to make a commit every time?
 

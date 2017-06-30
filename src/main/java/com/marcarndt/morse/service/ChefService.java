@@ -4,7 +4,7 @@ import com.marcarndt.morse.MorseBotException;
 import com.marcarndt.morse.chefapi.ChefApiClient;
 import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
-import com.marcarndt.morse.dto.Node;
+import com.marcarndt.morse.dto.ChefNode;
 
 import org.mongodb.morphia.query.Query;
 
@@ -109,7 +109,7 @@ public class ChefService {
    * @param recipe the recipe
    * @return the list
    */
-  public List<Node> recipeSearch(final String recipe) {
+  public List<ChefNode> recipeSearch(final String recipe) {
     LOG.info("Fetching Nodes from chef.");
     final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/search/dto?q=recipe:" + recipe)
@@ -118,18 +118,18 @@ public class ChefService {
         .createReader(new StringReader(response.getResponseBodyAsString()));
     final JsonObject rootObject = reader.readObject();
     final JsonArray array = rootObject.getJsonArray("rows");
-    final ArrayList<Node> nodes = new ArrayList();
+    final ArrayList<ChefNode> chefNodes = new ArrayList();
     for (final JsonValue value : array) {
       final JsonObject jsonStructure = (JsonObject) value;
       try {
-        nodes.add(getNode(jsonStructure));
+        chefNodes.add(getNode(jsonStructure));
       } catch (MorseBotException e) {
         if (LOG.isLoggable(Level.INFO)) {
           LOG.info("Ignoring node due ot ERROR - " + e.getMessage());//NOPMD
         }
       }
     }
-    return nodes;
+    return chefNodes;
 
   }
 
@@ -140,7 +140,7 @@ public class ChefService {
    * @return the node
    * @throws MorseBotException the morse bot exception
    */
-  public Node getNode(final String node) throws MorseBotException {
+  public ChefNode getNode(final String node) throws MorseBotException {
     final ApiMethod response = chefClient
         .get("/organizations/" + chefDetails.getOrginisation() + "/nodes/" + node)
         .execute();
@@ -159,7 +159,7 @@ public class ChefService {
     return getNode(rootObject);
   }
 
-  private Node getNode(final JsonObject rootObject) throws MorseBotException {
+  private ChefNode getNode(final JsonObject rootObject) throws MorseBotException {
     final String name = rootObject.getString("name");
     JsonObject jsonObject = rootObject.getJsonObject("automatic");
     String platform = "";
@@ -182,7 +182,7 @@ public class ChefService {
       }
     }
 
-    return new Node(name, rootObject.getString("chef_environment"), platform, ipAddress);
+    return new ChefNode(name, rootObject.getString("chef_environment"), platform, ipAddress);
   }
 
   /**

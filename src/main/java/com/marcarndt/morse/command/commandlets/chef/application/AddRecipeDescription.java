@@ -26,7 +26,7 @@ public class AddRecipeDescription implements Commandlet {
    */
   @Override
   public boolean canHandleCommand(final Message message, final String state) {
-    return state.equals(AddRecipeApplication.addRecipeApplicationState);
+    return state.equals(AddRecipeApplication.STATE);
   }
 
   /**

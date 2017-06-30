@@ -18,12 +18,25 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class ChefConfigureTest {
 
+
+  /**
+   * Class under test
+   */
   @InjectMocks
   private transient ChefConfigure chefConfigure;
+  /**
+   * Morsebot mock
+   */
   @Mock
   private transient MorseBot morseBot;
+  /**
+   * User mock
+   */
   @Mock
   private transient User user;
+  /**
+   * Chat mock
+   */
   @Mock
   private transient Chat chat;
 
@@ -34,7 +47,7 @@ public class ChefConfigureTest {
    * @throws Exception the exception
    */
   @Test
-  public void getCommandIdentifier() throws Exception {
+  public void getCommandIdentifier() {
     Assert.assertEquals("chefconfig", chefConfigure.getCommandIdentifier());
   }
 
@@ -44,7 +57,7 @@ public class ChefConfigureTest {
    * @throws Exception the exception
    */
   @Test
-  public void getDescription() throws Exception {
+  public void getDescription() {
     Assert.assertEquals("Configure the Chef Server", chefConfigure.getDescription());
   }
 
@@ -54,7 +67,7 @@ public class ChefConfigureTest {
    * @throws Exception the exception
    */
   @Test
-  public void getRole() throws Exception {
+  public void getRole() {
     Assert.assertEquals(UserService.ADMIN, chefConfigure.getRole());
   }
 
@@ -64,10 +77,11 @@ public class ChefConfigureTest {
    * @throws Exception the exception
    */
   @Test
-  public void performCommand() throws Exception {
-    String result = chefConfigure.performCommand(morseBot, user, chat, null);
+  public void performCommand() {
+    final String result = chefConfigure.performCommand(morseBot, user, chat, null);
     Mockito.verify(morseBot)
-        .sendReplyKeyboardMessage(user, chat, "Select option", "Server URL", "User", "AskForChefKey Path",
+        .sendReplyKeyboardMessage(user, chat, "Select option", "Server URL", "UpdateChefUser",
+            "AskForChefKey Path",
             "Organization");
     Assert.assertEquals("ChefConfig", result);
 
