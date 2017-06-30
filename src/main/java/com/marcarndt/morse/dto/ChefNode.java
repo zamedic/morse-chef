@@ -110,7 +110,7 @@ public class ChefNode {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   @Override
   public String toString() {
