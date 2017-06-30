@@ -1,10 +1,11 @@
-package com.marcarndt.morse.command.commandlets.chefconfig;
+package com.marcarndt.morse.command.commandlets.chef.config;
 
 import com.marcarndt.morse.MorseBot;
 import com.marcarndt.morse.MorseBotException;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,35 +23,38 @@ public class UpdateServer implements Commandlet {
   private transient ChefService chefService;
 
   /**
-   * True when previous call was from Server
+   * True when previous call was from Server.
+   *
    * @param message message
    * @param state state
    * @return true if this can execute
    */
   public boolean canHandleCommand(final Message message, final String state) {
-    return state.equals(Server.ChefServerState);
+    return state.equals(Server.STATE);
   }
 
   /**
-   * Update the server with the provided details
+   * Update the server with the provided details.
+   *
    * @param message message
    * @param state state
    * @param parameters parameters
    * @param morseBot morse bot
    */
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     final String server = message.getText();
     try {
       chefService.updateServer(server);
       morseBot.sendMessage("Updated Server", message.getChatId().toString());
     } catch (MorseBotException e) {
-      morseBot.sendMessage(e.getMessage(),message.getChatId().toString());
+      morseBot.sendMessage(e.getMessage(), message.getChatId().toString());
     }
   }
 
   /**
-   * None returned fromt his class
+   * None returned from this class.
+   *
    * @param message message
    * @param command command
    * @return null
@@ -60,13 +64,15 @@ public class UpdateServer implements Commandlet {
   }
 
   /**
-   * Null
-   * @param message message
+   * Null.
+   *
+   * @param message message.
    * @param state message
    * @param parameters message
    * @return null
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

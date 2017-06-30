@@ -1,6 +1,12 @@
 package com.marcarndt.morse.chefapi.method;
 
 import com.marcarndt.morse.chefapi.Utils;
+
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,10 +14,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
+
+
 
 /**
  * The type Api method.
@@ -32,7 +36,7 @@ public class ApiMethod {
    */
   protected String reqBody = "";
   /**
-   * The User id.
+   * The UpdateChefUser id.
    */
   protected String userId = "";
   /**
@@ -42,7 +46,7 @@ public class ApiMethod {
   /**
    * HTTP Client.
    */
-  private final static HttpClient CLIENT = new HttpClient();
+  private static final  HttpClient CLIENT = new HttpClient();
   /**
    * HTTP Method.
    */
@@ -83,7 +87,7 @@ public class ApiMethod {
         .append("\nX-Ops-Timestamp:").append(timeStamp)
         .append("\nX-Ops-UserId:").append(userId);
 
-    final String authString = Utils.signWithRSA(stringBuilder.toString(), pemPath);
+    final String authString = Utils.signWithRsa(stringBuilder.toString(), pemPath);
     final String[] authHeaders = Utils.splitAs60(authString);
 
     method.addRequestHeader("Content-type", "application/json");

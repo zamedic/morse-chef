@@ -1,5 +1,9 @@
 package com.marcarndt.morse.chefapi;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMReader;
+import org.bouncycastle.util.encoders.Base64;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,9 +19,6 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMReader;
-import org.bouncycastle.util.encoders.Base64;
 
 /**
  * The type Utils.
@@ -25,7 +26,7 @@ import org.bouncycastle.util.encoders.Base64;
 public final class Utils {
 
   /**
-   * Logger
+   * Logger.
    */
   private static final Logger LOG = Logger.getLogger(Utils.class.getName());
 
@@ -58,7 +59,7 @@ public final class Utils {
    * @param pemPath the pem path
    * @return the string
    */
-  public static String signWithRSA(final String inStr, final String pemPath) {
+  public static String signWithRsa(final String inStr, final String pemPath) {
     byte[] outStr = null;
     BufferedReader bufferedReader = null;
     try {
@@ -77,7 +78,7 @@ public final class Utils {
       final byte[] signature = instance.sign();
       outStr = Base64.encode(signature);
     } catch (InvalidKeyException e) {
-      LOG.log(Level.SEVERE,"Invalid Key",e);
+      LOG.log(Level.SEVERE,"Invalid AskForChefKey",e);
     } catch (IOException e) {
       LOG.log(Level.SEVERE,"IO Error",e);
     } catch (SignatureException e) {
