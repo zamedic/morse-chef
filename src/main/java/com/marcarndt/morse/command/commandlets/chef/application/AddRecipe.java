@@ -39,8 +39,8 @@ public class AddRecipe implements Commandlet {
    * @param morseBot morse bot
    */
   @Override
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Recipe description");
   }
 
@@ -63,7 +63,8 @@ public class AddRecipe implements Commandlet {
    * @return parameters
    */
   @Override
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return parameters;
   }
 }

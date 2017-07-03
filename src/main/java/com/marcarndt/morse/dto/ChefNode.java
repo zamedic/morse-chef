@@ -6,19 +6,19 @@ package com.marcarndt.morse.dto;
 public class ChefNode {
 
   /**
-   * ChefNode name
+   * ChefNode name.
    */
   private String name;
   /**
-   * ChefNode environment
+   * ChefNode environment.
    */
   private String environment;
   /**
-   * ChefNode platform
+   * ChefNode platform.
    */
   private String platform;
   /**
-   * ChefNode IP Address
+   * ChefNode IP Address.
    */
   private String ipAddress;
 
@@ -30,7 +30,8 @@ public class ChefNode {
    * @param platform node platform
    * @param ipAddress node IP Address
    */
-  public ChefNode(final String name, final String environment, final String platform, final String ipAddress) {
+  public ChefNode(final String name, final String environment, final String platform,
+      final String ipAddress) {
     this.name = name;
     this.environment = environment;
     this.platform = platform;
@@ -110,7 +111,7 @@ public class ChefNode {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   @Override
   public String toString() {

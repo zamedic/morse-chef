@@ -3,6 +3,7 @@ package com.marcarndt.morse.service;
 import com.marcarndt.morse.data.Cookbook;
 import com.marcarndt.swarm.data.Application;
 import com.marcarndt.swarm.service.ApplicationService;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -30,7 +31,8 @@ public class ChefApplicationService {
    * @param description the description
    * @param recipe the recipe
    */
-  public void addRecipeToApplication(final String application, final String description, final String recipe) {
+  public void addRecipeToApplication(final String application, final String description,
+      final String recipe) {
     final Application applicationObject = appService.getApplication(application);
 
     final Cookbook cookbook = new Cookbook(description, recipe, applicationObject);

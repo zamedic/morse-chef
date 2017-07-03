@@ -22,7 +22,7 @@ public class UpdateUser implements Commandlet {
   private transient ChefService chefService;
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   public boolean canHandleCommand(final Message message, final String state) {
     return state.equals(UpdateChefUser.STATE);
@@ -35,24 +35,25 @@ public class UpdateUser implements Commandlet {
    * @param parameters current parameters
    * @param morseBot morse bot
    */
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     final String user = message.getText();
     chefService.updateUser(user);
     morseBot.sendMessage("Updated user", message.getChatId().toString());
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   public String getNewState(final Message message, final String command) {
     return null;
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

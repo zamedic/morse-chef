@@ -40,8 +40,8 @@ public class AddRecipeCookbook implements Commandlet {
    * @param morseBot morse bot
    */
   @Override
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final  List<String> parameters, final MorseBot morseBot) {
     final String cookbook = message.getText();
     final String application = parameters.get(0);
     final String description = parameters.get(1);
@@ -71,7 +71,8 @@ public class AddRecipeCookbook implements Commandlet {
    * @return null
    */
   @Override
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

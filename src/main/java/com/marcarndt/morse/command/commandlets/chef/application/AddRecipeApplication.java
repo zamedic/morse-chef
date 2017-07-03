@@ -43,7 +43,8 @@ public class AddRecipeApplication implements Commandlet {
    * @param morseBot morsebot
    */
   @Override
-  public void handleCommand(final Message message, final String state, final List<String> list, final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state, final List<String> list,
+      final MorseBot morseBot) {
     morseBot.sendReplyKeyboardMessage(message, "Select application",
         appService.getApplications());
   }
@@ -67,7 +68,8 @@ public class AddRecipeApplication implements Commandlet {
    * @return new list with the recipe added
    */
   @Override
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> list) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> list) {
     return Arrays.asList(message.getText());
   }
 }

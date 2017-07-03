@@ -5,6 +5,7 @@ import com.marcarndt.morse.MorseBotException;
 import com.marcarndt.morse.command.commandlet.Commandlet;
 import com.marcarndt.morse.service.ChefService;
 import com.marcarndt.morse.telegrambots.api.objects.Message;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -74,7 +75,8 @@ public class UpdateKey implements Commandlet {
    * @param parameters current parameters
    * @return null.
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

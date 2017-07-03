@@ -5,6 +5,8 @@ import com.marcarndt.morse.chefapi.ChefApiClient;
 import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
 import com.marcarndt.morse.dto.ChefNode;
+import org.mongodb.morphia.query.Query;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,7 +43,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import org.mongodb.morphia.query.Query;
 
 
 /**

@@ -20,7 +20,7 @@ public class UpdateChefUser implements Commandlet {
   public static final String STATE = "Chef UpdateChefUser";
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   public boolean canHandleCommand(final Message message,final String state) {
     return state.equals(ChefConfigure.CHEF_CONFIG_STATE) && message.getText()
@@ -28,22 +28,23 @@ public class UpdateChefUser implements Commandlet {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Enter user");
   }
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
   public String getNewState(final Message message, final String command) {
     return STATE;
   }
   /**
-   * {@inheritDoc}
+   * {@inheritDoc}.
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }

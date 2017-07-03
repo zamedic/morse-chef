@@ -41,6 +41,7 @@ public class ChefNodeBot extends BaseCommand {
 
   /**
    * Retreives basic information for a chef node.
+   *
    * @param morseBot Morse bot
    * @param user UpdateChefUser
    * @param chat Chat
@@ -63,7 +64,8 @@ public class ChefNodeBot extends BaseCommand {
         LOG.info("Found ChefNode: " + chefNode.toString());//NOPMD
       }
       morseBot
-          .sendMessage(chefNode.getName() + " - " + chefNode.getEnvironment() + " - " + chefNode.getPlatform(),
+          .sendMessage(chefNode.getName() + " - " + chefNode.getEnvironment() + " - "
+                  + chefNode.getPlatform(),
               chat.getId().toString());
     } catch (MorseBotException e) {
       morseBot.sendMessage(e.getMessage(), chat.getId().toString());

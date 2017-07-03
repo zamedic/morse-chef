@@ -20,7 +20,7 @@ public class AskForChefKey implements Commandlet {
   public static final String STATE = "ChefKey";
 
   /**
-   * Checks if the commandlet can be executed
+   * Checks if the commandlet can be executed.
    * @param message input message
    * @param state current state
    * @return true if this is a AskForChefKey command for {@link ChefConfigure}
@@ -31,19 +31,19 @@ public class AskForChefKey implements Commandlet {
   }
 
   /**
-   * Asks the user for the key path
+   * Asks the user for the key path.
    * @param message input message
    * @param state current state
    * @param parameters current parameters
    * @param morseBot morse bot
    */
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Paste Key Value");
   }
 
   /**
-   * STATE
+   * STATE.
    * @param message input message
    * @param command command
    * @return STATE
@@ -53,13 +53,14 @@ public class AskForChefKey implements Commandlet {
   }
 
   /**
-   * Null
+   * Null.
    * @param message input message
    * @param state current state
    * @param parameters current parameters
    * @return Null
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }
