@@ -51,7 +51,7 @@ public class UpdateKey implements Commandlet {
       morseBot.sendMessage(e.getMessage(), message.getChatId().toString());
     }
 
-    morseBot.sendMessage("AskForChefKey Updated", message.getChatId().toString());
+    morseBot.sendMessage("Chef Key Updated", message.getChatId().toString());
 
   }
 

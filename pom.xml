@@ -6,7 +6,7 @@
 
   <groupId>com.marcarndt.morse</groupId>
   <artifactId>chef</artifactId>
-  <version>1.1.7-SNAPSHOT</version>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Morse Chef Plugin</name>

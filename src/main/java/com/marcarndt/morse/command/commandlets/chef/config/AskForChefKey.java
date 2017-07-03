@@ -39,7 +39,7 @@ public class AskForChefKey implements Commandlet {
    */
   public void handleCommand(final Message message, final String state, final List<String> parameters,
       final MorseBot morseBot) {
-    morseBot.sendReplyMessage(message, "Enter KEY path");
+    morseBot.sendReplyMessage(message, "Paste Key Value");
   }
 
   /**
