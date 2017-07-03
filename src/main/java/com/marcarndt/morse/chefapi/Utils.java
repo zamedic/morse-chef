@@ -1,14 +1,13 @@
 package com.marcarndt.morse.chefapi;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMReader;
-import org.bouncycastle.util.encoders.Base64;
-
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
@@ -19,6 +18,9 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMReader;
+import org.bouncycastle.util.encoders.Base64;
 
 /**
  * The type Utils.
@@ -47,7 +49,7 @@ public final class Utils {
       final byte[] digest = messageDigest.digest(inStr.getBytes(Charset.defaultCharset()));
       outbty = Base64.encode(digest);
     } catch (NoSuchAlgorithmException nsae) {
-      LOG.log(Level.SEVERE,"ERROR on chef util",nsae);
+      LOG.log(Level.SEVERE, "ERROR on chef util", nsae);
     }
     return new String(outbty, Charset.defaultCharset());
   }
@@ -63,30 +65,33 @@ public final class Utils {
     byte[] outStr = null;
     BufferedReader bufferedReader = null;
     try {
-      bufferedReader = new BufferedReader(new FileReader(pemPath));
+      bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(pemPath),
+          StandardCharsets.UTF_8));
     } catch (FileNotFoundException e) {
-      LOG.log(Level.SEVERE,"Error on chef util RSA",e);
+      LOG.log(Level.SEVERE, "Error on chef util RSA", e);
     }
     Security.addProvider(new BouncyCastleProvider());
     try {
-      final KeyPair keyPair = (KeyPair) new PEMReader(bufferedReader).readObject();
+      PEMReader pemReader = new PEMReader(bufferedReader);
+      final KeyPair keyPair = (KeyPair) pemReader.readObject();
+      pemReader.close();
       final PrivateKey privateKey = keyPair.getPrivate();
       final Signature instance = Signature.getInstance("RSA");
       instance.initSign(privateKey);
-      instance.update(inStr.getBytes());
+      instance.update(inStr.getBytes(StandardCharsets.UTF_8));
 
       final byte[] signature = instance.sign();
       outStr = Base64.encode(signature);
     } catch (InvalidKeyException e) {
-      LOG.log(Level.SEVERE,"Invalid AskForChefKey",e);
+      LOG.log(Level.SEVERE, "Invalid AskForChefKey", e);
     } catch (IOException e) {
-      LOG.log(Level.SEVERE,"IO Error",e);
+      LOG.log(Level.SEVERE, "IO Error", e);
     } catch (SignatureException e) {
-      LOG.log(Level.SEVERE,"Signature Exception",e);
+      LOG.log(Level.SEVERE, "Signature Exception", e);
     } catch (NoSuchAlgorithmException e) {
-      LOG.log(Level.SEVERE,"Could not find algorithm",e);
+      LOG.log(Level.SEVERE, "Could not find algorithm", e);
     }
-    return new String(outStr);
+    return new String(outStr,StandardCharsets.UTF_8);
   }
 
   /**

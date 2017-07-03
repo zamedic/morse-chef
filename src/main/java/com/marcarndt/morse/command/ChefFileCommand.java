@@ -17,7 +17,7 @@ public class ChefFileCommand extends BaseCommand {
   /**
    * The constant chefFile.
    */
-  public static String chefFile = "chefFile";
+  public static final String chefFile = "chefFile";
 
   /**
    * The Ssh service.

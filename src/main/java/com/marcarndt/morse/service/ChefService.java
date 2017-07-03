@@ -12,11 +12,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -97,14 +99,17 @@ public class ChefService {
     File file = new File("chef.pem");
     if (chefDetails.getKeyPath() != null) {
       if (!file.exists()) {
-        LOG.info("Creating chef pem file: "+file.getPath());
+        LOG.info("Creating chef pem file: " + file.getPath());
         try {
-          PrintWriter printWriter = new PrintWriter(file);
+          OutputStreamWriter printWriter = new OutputStreamWriter(new FileOutputStream(file),
+              StandardCharsets.UTF_8);
           printWriter.write(chefDetails.getKeyPath());
           printWriter.close();
-          LOG.info("CHef pem file created: "+file.getPath());
+          LOG.info("CHef pem file created: " + file.getPath());
         } catch (FileNotFoundException e) {
           LOG.log(Level.SEVERE, "Error creating file", e);
+        } catch (IOException e) {
+          LOG.log(Level.SEVERE, "IO Error creating file", e);
         }
       }
     }
