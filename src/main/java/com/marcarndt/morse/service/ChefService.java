@@ -5,15 +5,14 @@ import com.marcarndt.morse.chefapi.ChefApiClient;
 import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
 import com.marcarndt.morse.dto.ChefNode;
-
-import org.mongodb.morphia.query.Query;
-
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.URL;
@@ -41,6 +40,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import org.mongodb.morphia.query.Query;
 
 /**
  * Created by arndt on 2017/04/10.
@@ -88,8 +88,27 @@ public class ChefService {
   }
 
   private void initializeClient() {
-    chefClient = new ChefApiClient(chefDetails.getUserName(), chefDetails.getKeyPath(),
+    File chefPem = createChefPem(chefDetails);
+    chefClient = new ChefApiClient(chefDetails.getUserName(), chefPem.getPath(),
         chefDetails.getServerUrl());
+  }
+
+  private File createChefPem(ChefDetails chefDetails) {
+    File file = new File("chef.pem");
+    if (chefDetails.getKeyPath() != null) {
+      if (!file.exists()) {
+        LOG.info("Creating chef pem file: "+file.getPath());
+        try {
+          PrintWriter printWriter = new PrintWriter(file);
+          printWriter.write(chefDetails.getKeyPath());
+          printWriter.close();
+          LOG.info("CHef pem file created: "+file.getPath());
+        } catch (FileNotFoundException e) {
+          LOG.log(Level.SEVERE, "Error creating file", e);
+        }
+      }
+    }
+    return file;
   }
 
   /**
@@ -336,7 +355,7 @@ public class ChefService {
       public X509Certificate[] getAcceptedIssuers() { //NOPMD
         return null;
       }
-    } }, new java.security.SecureRandom());
+    }}, new java.security.SecureRandom());
     conn.setSSLSocketFactory(sslContext.getSocketFactory());
     conn.connect();
     return conn.getServerCertificates();
