@@ -1,11 +1,14 @@
 package com.marcarndt.morse.chefapi;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMReader;
+import org.bouncycastle.util.encoders.Base64;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -18,9 +21,7 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMReader;
-import org.bouncycastle.util.encoders.Base64;
+
 
 /**
  * The type Utils.
@@ -72,7 +73,7 @@ public final class Utils {
     }
     Security.addProvider(new BouncyCastleProvider());
     try {
-      PEMReader pemReader = new PEMReader(bufferedReader);
+      final PEMReader pemReader = new PEMReader(bufferedReader);
       final KeyPair keyPair = (KeyPair) pemReader.readObject();
       pemReader.close();
       final PrivateKey privateKey = keyPair.getPrivate();
@@ -91,7 +92,7 @@ public final class Utils {
     } catch (NoSuchAlgorithmException e) {
       LOG.log(Level.SEVERE, "Could not find algorithm", e);
     }
-    return new String(outStr,StandardCharsets.UTF_8);
+    return new String(outStr, StandardCharsets.UTF_8);
   }
 
   /**

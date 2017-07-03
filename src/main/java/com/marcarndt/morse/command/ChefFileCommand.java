@@ -15,9 +15,9 @@ import javax.inject.Inject;
 public class ChefFileCommand extends BaseCommand {
 
   /**
-   * The constant chefFile.
+   * The constant STATE.
    */
-  public static final String chefFile = "chefFile";
+  public static final String STATE = "STATE";
 
   /**
    * The Ssh service.
@@ -40,21 +40,21 @@ public class ChefFileCommand extends BaseCommand {
    * @param user user
    * @param chat chat
    * @param arguments arguments ignored byt he command
-   * @return chefFile state
+   * @return STATE state
    */
   protected String performCommand(final MorseBot morseBot, final User user, final Chat chat,
       final String... arguments) {
     morseBot.sendReplyKeyboardMessage(user, chat, "Select file", sshService.getFileDescriptions());
-    return chefFile;
+    return STATE;
   }
 
   /**
-   * chefFile.
-   * @return chefFile
+   * STATE.
+   * @return STATE
    */
   @Override
   public String getCommandIdentifier() {
-    return "chefFile";
+    return "STATE";
   }
 
   /**
