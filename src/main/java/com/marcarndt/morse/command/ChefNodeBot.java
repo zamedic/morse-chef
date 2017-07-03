@@ -41,7 +41,6 @@ public class ChefNodeBot extends BaseCommand {
 
   /**
    * Retreives basic information for a chef node.
-   *
    * @param morseBot Morse bot
    * @param user UpdateChefUser
    * @param chat Chat
