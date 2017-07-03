@@ -8,7 +8,11 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import com.marcarndt.morse.data.ChefDetails;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,7 +38,9 @@ public class ChefServiceTest {
   @Mock
   File file;
   @Mock
-  PrintWriter printWriter;
+  OutputStreamWriter outputStreamWriter;
+  @Mock
+  FileOutputStream fileOutputStream;
 
   @InjectMocks
   ChefService chefService;
@@ -62,24 +68,33 @@ public class ChefServiceTest {
     }
     when(file.exists()).thenReturn(false);
     try {
-      whenNew(PrintWriter.class).withArguments(file).thenReturn(printWriter);
+      whenNew(FileOutputStream.class).withArguments(file).thenReturn(fileOutputStream);
+      whenNew(OutputStreamWriter.class).withArguments(fileOutputStream, StandardCharsets.UTF_8).thenReturn(outputStreamWriter);
     } catch (Exception e) {
       fail(e.getMessage());
     }
 
     chefService.setup();
 
-    verify(printWriter).write("-----BEGIN RSA PRIVATE KEY-----\n"
-        + "MIIBOwIBAAJBAJv8ZpB5hEK7qxP9K3v43hUS5fGT4waKe7ix4Z4mu5UBv+cw7WSF\n"
-        + "At0Vaag0sAbsPzU8Hhsrj/qPABvfB8asUwcCAwEAAQJAG0r3ezH35WFG1tGGaUOr\n"
-        + "QA61cyaII53ZdgCR1IU8bx7AUevmkFtBf+aqMWusWVOWJvGu2r5VpHVAIl8nF6DS\n"
-        + "kQIhAMjEJ3zVYa2/Mo4ey+iU9J9Vd+WoyXDQD4EEtwmyG1PpAiEAxuZlvhDIbbce\n"
-        + "7o5BvOhnCZ2N7kYb1ZC57g3F+cbJyW8CIQCbsDGHBto2qJyFxbAO7uQ8Y0UVHa0J\n"
-        + "BO/g900SAcJbcQIgRtEljIShOB8pDjrsQPxmI1BLhnjD1EhRSubwhDw5AFUCIQCN\n"
-        + "A24pDtdOHydwtSB5+zFqFLfmVZplQM/g5kb4so70Yw==\n"
-        + "-----END RSA PRIVATE KEY-----\n");
+    try {
+      verify(outputStreamWriter).write("-----BEGIN RSA PRIVATE KEY-----\n"
+          + "MIIBOwIBAAJBAJv8ZpB5hEK7qxP9K3v43hUS5fGT4waKe7ix4Z4mu5UBv+cw7WSF\n"
+          + "At0Vaag0sAbsPzU8Hhsrj/qPABvfB8asUwcCAwEAAQJAG0r3ezH35WFG1tGGaUOr\n"
+          + "QA61cyaII53ZdgCR1IU8bx7AUevmkFtBf+aqMWusWVOWJvGu2r5VpHVAIl8nF6DS\n"
+          + "kQIhAMjEJ3zVYa2/Mo4ey+iU9J9Vd+WoyXDQD4EEtwmyG1PpAiEAxuZlvhDIbbce\n"
+          + "7o5BvOhnCZ2N7kYb1ZC57g3F+cbJyW8CIQCbsDGHBto2qJyFxbAO7uQ8Y0UVHa0J\n"
+          + "BO/g900SAcJbcQIgRtEljIShOB8pDjrsQPxmI1BLhnjD1EhRSubwhDw5AFUCIQCN\n"
+          + "A24pDtdOHydwtSB5+zFqFLfmVZplQM/g5kb4so70Yw==\n"
+          + "-----END RSA PRIVATE KEY-----\n");
+    } catch (IOException e) {
+      fail(e.getMessage());
+    }
 
-    verify(printWriter).close();
+    try {
+      verify(outputStreamWriter).close();
+    } catch (IOException e) {
+      fail(e.getMessage());
+    }
 
   }
 
