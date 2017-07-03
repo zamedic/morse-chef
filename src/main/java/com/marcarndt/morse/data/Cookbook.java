@@ -18,11 +18,11 @@ public class Cookbook {
   @Id
   private ObjectId objectId;
   /**
-   * Cookbook Description
+   * Cookbook Description.
    */
   private String description;
   /**
-   * Cookbook Name
+   * Cookbook Name.
    */
   private String cookbookName;
 

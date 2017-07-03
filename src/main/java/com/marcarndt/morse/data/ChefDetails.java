@@ -11,24 +11,24 @@ import org.mongodb.morphia.annotations.Id;
 public class ChefDetails {
 
   /**
-   * Object ID
+   * Object ID.
    */
   @Id
   private ObjectId objectId;
   /**
-   * Server URL
+   * Server URL.
    */
   private String serverUrl;
   /**
-   * User name
+   * User name.
    */
   private String userName;
   /**
-   * Key path
+   * Key path.
    */
   private String keyPath;
   /**
-   * chef orignisation
+   * chef orignisation.
    */
   private String orginisation;
 

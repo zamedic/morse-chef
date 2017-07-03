@@ -70,7 +70,7 @@ public class ChefFileCommandTest {
     Mockito.when(sshService.getFileDescriptions()).thenReturn(files);
     final String response = chefFileCommand.performCommand(morseBot, user, chat, null);
     Mockito.verify(morseBot).sendReplyKeyboardMessage(user, chat, "Select file", files);
-    assertEquals("response should be chefFile", "chefFile", response);
+    assertEquals("response should be STATE", "STATE", response);
   }
 
   /**
@@ -80,7 +80,7 @@ public class ChefFileCommandTest {
    */
   @Test
   public void getCommandIdentifier() {
-    assertEquals("command should be chefFile", "chefFile", chefFileCommand.getCommandIdentifier());
+    assertEquals("command should be STATE", "STATE", chefFileCommand.getCommandIdentifier());
   }
 
   /**

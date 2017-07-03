@@ -5,6 +5,8 @@ import com.marcarndt.morse.chefapi.ChefApiClient;
 import com.marcarndt.morse.chefapi.method.ApiMethod;
 import com.marcarndt.morse.data.ChefDetails;
 import com.marcarndt.morse.dto.ChefNode;
+import org.mongodb.morphia.query.Query;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,11 +14,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -40,7 +43,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import org.mongodb.morphia.query.Query;
+
 
 /**
  * Created by arndt on 2017/04/10.
@@ -88,24 +91,29 @@ public class ChefService {
   }
 
   private void initializeClient() {
-    File chefPem = createChefPem(chefDetails);
+    final File chefPem = createChefPem(chefDetails);
     chefClient = new ChefApiClient(chefDetails.getUserName(), chefPem.getPath(),
         chefDetails.getServerUrl());
   }
 
-  private File createChefPem(ChefDetails chefDetails) {
-    File file = new File("chef.pem");
-    if (chefDetails.getKeyPath() != null) {
-      if (!file.exists()) {
-        LOG.info("Creating chef pem file: "+file.getPath());
-        try {
-          PrintWriter printWriter = new PrintWriter(file);
-          printWriter.write(chefDetails.getKeyPath());
-          printWriter.close();
-          LOG.info("CHef pem file created: "+file.getPath());
-        } catch (FileNotFoundException e) {
-          LOG.log(Level.SEVERE, "Error creating file", e);
+  private File createChefPem(final ChefDetails chefDetails) {
+    final File file = new File("chef.pem");
+    if (chefDetails.getKeyPath() != null && !file.exists()) {
+      if (LOG.isLoggable(Level.INFO)) {
+        LOG.info("Creating chef pem file: " + file.getPath());
+      }
+      try {
+        final OutputStreamWriter printWriter = new OutputStreamWriter(new FileOutputStream(file),
+            StandardCharsets.UTF_8);
+        printWriter.write(chefDetails.getKeyPath());
+        printWriter.close();
+        if (LOG.isLoggable(Level.INFO)) {
+          LOG.info("CHef pem file created: " + file.getPath());
         }
+      } catch (FileNotFoundException e) {
+        LOG.log(Level.SEVERE, "Error creating file", e);
+      } catch (IOException e) {
+        LOG.log(Level.SEVERE, "IO Error creating file", e);
       }
     }
     return file;

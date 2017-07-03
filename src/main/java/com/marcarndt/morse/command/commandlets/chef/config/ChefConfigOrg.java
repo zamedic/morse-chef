@@ -31,14 +31,14 @@ public class ChefConfigOrg implements Commandlet {
   }
 
   /**
-   * Asks user for ORG Name
+   * Asks user for ORG Name.
    * @param message input message
    * @param state current state
    * @param parameters current paramters
    * @param morseBot morse bot
    */
-  public void handleCommand(final Message message, final String state, final List<String> parameters,
-      final MorseBot morseBot) {
+  public void handleCommand(final Message message, final String state,
+      final List<String> parameters, final MorseBot morseBot) {
     morseBot.sendReplyMessage(message, "Enter new ORG name");
   }
 
@@ -53,13 +53,14 @@ public class ChefConfigOrg implements Commandlet {
   }
 
   /**
-   * Null
+   * Null.
    * @param message input message
    * @param state input state
    * @param parameters input parameters
    * @return null
    */
-  public List<String> getNewStateParams(final Message message, final String state, final List<String> parameters) {
+  public List<String> getNewStateParams(final Message message, final String state,
+      final List<String> parameters) {
     return null;
   }
 }
